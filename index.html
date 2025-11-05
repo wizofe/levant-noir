@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Levant Noir – Ioannis Valasakis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root{
+      --black:#0a0a0a; --sand:#d4c4a8; --copper:#b87333; --sea-green:#5a7d7c; --off-white:#faf8f5;
+    }
+
+    body{
+      font-family:'Fira Sans',sans-serif;
+      background:var(--off-white);
+      color:var(--black);
+      line-height:1.7;
+      font-weight:300;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:'';
+      position:fixed; inset:0;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px);
+      pointer-events:none; z-index:9999; opacity:.3;
+    }
+
+    h1,h2,h3{ font-family:'Cormorant Garamond',serif; font-weight:400; letter-spacing:.5px; }
+
+    section{ min-height:50vh; padding:8rem 5%; max-width:1400px; margin:0 auto; }
+
+    /* HERO */
+    .hero{
+      min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+      color:var(--sand); position:relative; padding:2rem;
+      background:linear-gradient(135deg,var(--black) 0%,#1a1a1a 100%);
+      background-image:url('images/persian.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat;
+    }
+    .hero::before,.hero::after{ content:''; position:absolute; inset:0; pointer-events:none; z-index:1; }
+    .hero::before{
+      background:linear-gradient(to bottom,rgba(10,10,10,.75) 0%,rgba(10,10,10,.6) 30%,rgba(10,10,10,.65) 70%,rgba(10,10,10,.85) 100%);
+    }
+    .hero::after{
+      background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.5) 100%);
+    }
+    .hero-content{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:1.25rem; }
+
+    .hero h1{
+      font-size:clamp(3rem,8vw,6rem); margin-bottom:.25rem; letter-spacing:3px; font-weight:400;
+      text-shadow:0 3px 15px rgba(0,0,0,.9);
+    }
+    .hero .subtitle{
+      font-size:clamp(.9rem,2vw,1.1rem); color:var(--copper); margin-bottom:.75rem; letter-spacing:1px;
+      text-shadow:0 2px 12px rgba(0,0,0,.9); font-weight:400;
+    }
+    .hero .description{
+      font-size:clamp(1rem,2.2vw,1.3rem); max-width:72ch; margin:0 auto .25rem;
+      font-style:italic; line-height:1.8; color:var(--sand);
+      background:rgba(10,10,10,.65); padding:1.5rem 2.5rem;
+      border-left:1px solid rgba(184,115,51,.5);
+      text-shadow:0 2px 8px rgba(0,0,0,.8); backdrop-filter:blur(4px);
+    }
+
+    /* Controls now in normal flow */
+    .hero-controls{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:.55rem .8rem; border:1px solid rgba(184,115,51,.45);
+      background:rgba(10,10,10,.55); backdrop-filter:blur(6px);
+      border-radius:999px; box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    .audio-toggle{
+      padding:.55rem 1.1rem; border:none; background:transparent;
+      color:var(--sand); font-size:.95rem; letter-spacing:.5px; cursor:pointer;
+      border-radius:999px; transition:color .2s ease,background .2s ease,transform .15s ease; outline-offset:3px;
+    }
+    .audio-toggle:active{ transform:translateY(1px); }
+    .audio-toggle.is-playing{ color:var(--black); background:var(--copper); box-shadow:0 6px 18px rgba(184,115,51,.35); }
+
+    /* Always-on caption below the button */
+    .sound-note-static{
+      width:min(92vw,62ch); text-align:center; font-size:.82rem; line-height:1.45; color:var(--sand);
+      opacity:.9; padding:.35rem .5rem; background:rgba(10,10,10,.38);
+      border:1px solid rgba(184,115,51,.22); border-radius:.5rem; backdrop-filter:blur(4px);
+    }
+
+    /* Remove old footnote block if any */
+    .synthesis-note{ display:none !important; }
+
+    @media (max-width:560px){
+      .sound-note-static{ font-size:.8rem; width:min(94vw,62ch); }
+    }
+
+    /* About */
+    .about{ background:var(--off-white); padding:10rem 5%; }
+    .about h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:3rem; color:var(--sea-green); }
+    .manifesto{ font-size:clamp(1.1rem,2vw,1.3rem); line-height:2; max-width:900px; color:#2a2a2a; }
+    .manifesto p{ margin-bottom:1.5rem; }
+
+    /* Music */
+    .music{ background:linear-gradient(to bottom,var(--sand) 0%,var(--off-white) 100%); }
+    .music h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:2rem; color:var(--copper); }
+    .player-container{
+      background:rgba(255,255,255,.6); padding:3rem; border:1px solid rgba(0,0,0,.1); margin:2rem 0; backdrop-filter:blur(10px);
+    }
+    .patch-notes{ font-size:.95rem; color:var(--sea-green); margin-top:1.5rem; font-family:'Courier New',monospace; letter-spacing:.5px; }
+    .ritual-text{ font-style:italic; margin-top:2rem; color:#4a4a4a; font-size:1.05rem; }
+
+    /* Influences */
+    .influences{ background:var(--off-white); }
+    .influences h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:5rem; color:var(--black); }
+    .constellation-group{ margin-bottom:6rem; max-width:900px; }
+    .constellation-header{ display:flex; align-items:center; gap:1rem; margin-bottom:3rem; }
+    .constellation-symbol{ font-size:1.5rem; color:var(--copper); opacity:.6; }
+    .constellation-header h3{ font-size:1.5rem; margin:0; color:var(--sea-green); font-weight:400; letter-spacing:1px; }
+    .ma-divider{ width:60px; height:1px; background:linear-gradient(to right,transparent,var(--copper),transparent); margin:5rem auto; opacity:.3; }
+    .artist-list{ display:flex; flex-wrap:wrap; gap:.8rem 1.5rem; line-height:2; }
+    .artist{ font-size:.95rem; color:#4a4a4a; transition:.3s ease; position:relative; }
+    .artist::after{ content:'·'; position:absolute; right:-.9rem; color:var(--copper); opacity:.3; }
+    .artist:hover{ color:var(--copper); letter-spacing:.5px; }
+
+    /* Minimal works */
+    .featured-works-minimal{ display:flex; flex-direction:column; gap:2.5rem; }
+    .work-minimal{ display:flex; flex-direction:column; gap:.4rem; padding-left:2rem; border-left:1px solid rgba(90,125,124,.15); transition:.4s ease; }
+    .work-minimal:hover{ border-left-color:var(--copper); padding-left:2.5rem; }
+    .work-artist{ font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--sea-green); font-weight:400; }
+    .work-detail{ font-size:.9rem; color:#6a6a6a; font-style:italic; opacity:.85; }
+
+    /* Setup */
+    .setup{ background:linear-gradient(to bottom,#f5f3f0 0%,var(--sand) 100%); }
+    .setup h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:2rem; color:var(--black); }
+    .setup-diagram{
+      background:rgba(10,10,10,.85); padding:0; margin:2rem 0; border:1px solid var(--copper); position:relative;
+      min-height:500px; display:flex; align-items:center; justify-content:center; overflow:hidden;
+      background-image:url('images/synth.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat;
+    }
+    .setup-diagram::before{
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to bottom,rgba(10,10,10,.3) 0%,rgba(10,10,10,.5) 50%,rgba(10,10,10,.7) 100%); z-index:1;
+    }
+    .setup-caption{
+      position:relative; z-index:2; background:rgba(10,10,10,.85); padding:2rem 3rem; border:1px solid var(--copper); backdrop-filter:blur(8px);
+      font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--sand); font-style:italic; line-height:1.9; max-width:600px; text-align:center;
+    }
+
+    /* Journal */
+    .journal{ background:var(--off-white); }
+    .journal h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:2rem; color:var(--sea-green); }
+    .journal-entry{ margin:3rem 0; max-width:800px; }
+    .journal-entry h3{ font-size:1.6rem; margin-bottom:1rem; color:var(--copper); }
+    .journal-entry p{ font-size:1.05rem; line-height:1.9; color:#2a2a2a; }
+
+    /* Contact */
+    .contact{
+      background:var(--black); color:var(--sand); text-align:center; position:relative;
+      background-image:url('images/mail.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat;
+    }
+    .contact::before{
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to bottom,rgba(10,10,10,.88) 0%,rgba(10,10,10,.92) 50%,rgba(10,10,10,.90) 100%); z-index:1;
+    }
+    .contact>*{ position:relative; z-index:2; }
+    .contact h2{ font-size:clamp(2.5rem,5vw,4rem); margin-bottom:2rem; color:var(--copper); }
+    .contact p{ font-size:1.2rem; margin-bottom:3rem; opacity:.9; }
+    .contact-form{ max-width:600px; margin:0 auto; }
+    .contact-form input,.contact-form textarea{
+      width:100%; padding:1rem; margin-bottom:1.5rem; background:rgba(255,255,255,.1); border:1px solid var(--copper);
+      color:var(--sand); font-family:'Fira Sans',sans-serif; font-size:1rem;
+    }
+    .contact-form input::placeholder,.contact-form textarea::placeholder{ color:var(--sand); opacity:.5; }
+    .contact-form button{
+      padding:1rem 3rem; background:var(--copper); border:none; color:var(--black); font-family:'Fira Sans',sans-serif; font-size:1rem;
+      cursor:pointer; transition:all .4s ease; letter-spacing:1px;
+    }
+    .contact-form button:hover{ background:var(--sand); transform:translateY(-2px); }
+    .mailto-link{ display:inline-block; margin-top:2rem; color:var(--sea-green); text-decoration:none; font-size:1.1rem; transition:color .3s ease; }
+    .mailto-link:hover{ color:var(--copper); }
+
+    /* Footer */
+    footer{ background:var(--black); color:var(--sand); text-align:center; padding:2rem; font-size:.9rem; opacity:.7; }
+
+    /* instagram */
+    .social-link{ display:inline-flex; align-items:center; gap:.5rem; color: var(--sea-green); text-decoration:none; font-size:1rem; transition: color .25s ease, transform .2s ease;}
+    
+    .social-link:hover{ color: var(--copper); transform: translateY(-1px); }
+    .social-icon{ fill: currentColor; display:block; }
+
+    /* Smooth scroll */
+    html{ scroll-behavior:smooth; }
+
+    @media (max-width:768px){
+      section{ padding:4rem 5%; }
+      .artist-grid{ grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>LEVANT NOIR</h1>
+      <p class="subtitle">Composer · Multi-instrumentalist · Researcher of Eastern Mediterranean traditions</p>
+      <p class="description">Exploring the resonance between ancient modal traditions and modular sound — weaving Persian, Mediterranean, and electronic worlds.</p>
+
+      <div class="hero-controls" role="region" aria-label="Ambient sound control">
+        <button id="audioToggle" class="audio-toggle" aria-pressed="false" aria-label="Toggle ambient sound">
+          ▶︎ ambient sound
+        </button>
+      </div>
+
+      <p class="sound-note-static" aria-live="polite">
+        Live, generative microtonal ambience in the Uşşak makam — four voices with quarter-tone inflections,
+        evolving in real time via the Web Audio API. Every listening is unique.
+      </p>
+    </div>
+  </section>
+
+  <!-- About / Manifesto -->
+  <section class="about">
+    <h2>About</h2>
+    <div class="manifesto">
+      <p>I compose and perform under the name <strong>Levant Noir</strong> — a space where sound becomes archaeology. My practice lies between Persian dastgāh, Arabic maqāmāt, and Greek–Anatolian makams — modal systems that breathe like living organisms. I explore how their microtonal gestures, improvisational forms, and ritual depth can unfold inside modern tools: modular synths, granular textures, and open circuits.</p>
+
+      <p>I work with lavta, mandolin, and hand percussion, combining them with the fragile warmth of analogue electronics and field recordings. I'm drawn to the imperfections of tone, the way feedback and resonance echo human breath. Each composition is performed live, recorded as a single evolving take — a moment of balance between discipline and accident.</p>
+
+      <p>My influences range from Chihei Hatakeyama's quiet guitar architectures to Yutaka Hirose's environmental synth poetics, Haruomi Hosono's warmth, and Fennesz's washed frequencies — alongside the modal lyricism of Antonis Antoniou, Youmna Saba, and Rosalía's flamenco pulse.</p>
+
+      <p>I see sound as a kind of remembering: every vibration carrying the weight of place, the texture of language, the voice of water and dust. Levant Noir is how I trace the connection between past and signal — between the ghosts of the Eastern Mediterranean and the electricity of now.</p>
+    </div>
+  </section>
+
+  <!-- Music / Works -->
+  <section class="music">
+    <h2>Music & Works</h2>
+
+    <div class="player-container">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--copper);">L'Ambiance</h3>
+      <p style="font-size:.95rem;margin-bottom:1.5rem;color:#4a4a4a;line-height:1.7;">Ambient minimal, written for the installation <em>Espacio Liminal</em> — Galería Niebelungen, Berlin, August 2024. A meditation on thresholds and dissolving boundaries, built from filtered noise, glacial synth pads, and the expresiveness of slowed field recordings from melting ice.</p>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/levante_noir/l-ambiance&color=%23b87333&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <div class="patch-notes" style="margin-top:1rem;">
+        BPM: flow · Oscillator: Plaits (wavetable mode) · Filter: Ripples (BP 24dB, slow resonance sweep) · Reverb: Clouds (80% wet) · Field recordings → Morphagene (tape speed -50%)
+      </div>
+    </div>
+
+    <div class="player-container">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--copper);">Lean Candles</h3>
+      <p style="font-size:.95rem;margin-bottom:1.5rem;color:#4a4a4a;line-height:1.7;">Opening theme for <em>Անցումի Ժամանակ (Anc'umi Zhamanak)</em> — Guildhall School film composition contest entry, October 2022. Made for a Documentary chronicling political transformation in Armenia. Trip-hop rhythms layered with Armenian duduk, a melting Moog bass, and fragmented vinyl samples and noise. A sonic portrait of change.</p>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/levante_noir/lean-candles&color=%235a7d7c&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <div class="patch-notes" style="margin-top:1rem;">
+        BPM: 87 · Duduk → granular processing (3s grains) · Drum machine: Roland TR-8S · Bass: Moog Sub37 · Vinyl crackle → tape saturation → VCA sidechain
+      </div>
+    </div>
+
+    <div class="player-container">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--copper);">Oud Texture</h3>
+      <p style="font-size:.95rem;margin-bottom:1.5rem;color:#4a4a4a;line-height:1.7;">An experiment in shimmering granular Mediterranean percussion — processed handbells, bendir (frame drum), and finger cymbals through spectral delays. A short melody motif on oud emerges like sunlight through water, then dissolves back into the shimmer. Recorded in a single improvised take in a Turkish bath in Smyrna.</p>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/levante_noir/oud-texture&color=%23d4c4a8&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+      <div class="patch-notes" style="margin-top:1rem;">
+        Oud → granular freeze (Beads) · Percussion → multi-tap delay (Magneto 8-head mode) · Bells → pitch-shifted reverb (Mimeophon + Clouds) · Signal path: stereo field rotation via Maths CV
+      </div>
+    </div>
+
+    <p class="ritual-text" style="text-align:center;margin-top:3rem;">"Made in one breath; flaws kept like kintsugi seams of sound."</p>
+  </section>
+
+  <!-- Influences / Constellations -->
+  <section class="influences">
+    <h2>Influences & Constellations</h2>
+
+    <div class="constellation-group">
+      <div class="constellation-header">
+        <span class="constellation-symbol">◯</span>
+        <h3>Eastern Mediterranean & Avant-Folk</h3>
+      </div>
+      <div class="artist-list">
+        <span class="artist">Antonis Leontidis</span>
+        <span class="artist">Tarta Relena</span>
+        <span class="artist">Youmna Saba</span>
+        <span class="artist">Julie Holter</span>
+        <span class="artist">Julia Sabra</span>
+        <span class="artist">Loula Yorke</span>
+        <span class="artist">PJ Harvey</span>
+        <span class="artist">SoapKills</span>
+        <span class="artist">Bedouin Burger</span>
+        <span class="artist">Modularprincess</span>
+        <span class="artist">Kaitlyn Aurelia Smith</span>
+        <span class="artist">Arab Strap</span>
+        <span class="artist">St Vincent</span>
+        <span class="artist">Julian Lage</span>
+        <span class="artist">Vijay Iyer</span>
+        <span class="artist">Massive Attack</span>
+        <span class="artist">Portishead</span>
+        <span class="artist">Antonis Antoniou</span>
+        <span class="artist">George Mavridis</span>
+      </div>
+    </div>
+
+    <div class="ma-divider"></div>
+
+    <div class="constellation-group">
+      <div class="constellation-header">
+        <span class="constellation-symbol">◯</span>
+        <h3>Japanese & Ambient</h3>
+      </div>
+      <div class="featured-works-minimal">
+        <div class="work-minimal">
+          <span class="work-artist">Chihei Hatakeyama</span>
+          <span class="work-detail">Void XX — guitar ambient architecture</span>
+        </div>
+        <div class="work-minimal">
+          <span class="work-artist">Yutaka Hirose</span>
+          <span class="work-detail">Nova + 4 — modular environmental poetics</span>
+        </div>
+        <div class="work-minimal">
+          <span class="work-artist">Haruomi Hosono</span>
+          <span class="work-detail">Watering a Flower — gentle synth minimalism</span>
+        </div>
+        <div class="work-minimal">
+          <span class="work-artist">Kaitlyn Aurelia Smith</span>
+          <span class="work-detail">The Mosaic of Transformation — Buchla timbre evolution</span>
+        </div>
+        <div class="work-minimal">
+          <span class="work-artist">Ohzora Kimishima</span>
+          <span class="work-detail">no public sounds (2023) — glitch-folk DSP rebirth</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ma-divider"></div>
+
+    <div class="constellation-group">
+      <div class="constellation-header">
+        <span class="constellation-symbol">◯</span>
+        <h3>Extended Constellation</h3>
+      </div>
+      <div class="artist-list">
+        <span class="artist">Ganavya — Daughter of a Temple</span>
+        <span class="artist">Meara O'Reilly — Hockets for Two Voices</span>
+        <span class="artist">Evan Ziporyn — No Return</span>
+        <span class="artist">Μιχάλης Σιγανίδης</span>
+        <span class="artist">Τάσος Στάμου</span>
+        <span class="artist">Scatter Archive — Abrash</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live / Modular Setup -->
+  <section class="setup">
+    <h2>Live / Modular Setup</h2>
+    <div class="setup-diagram">
+      <div class="setup-caption">
+        The modular system becomes an extension of breath and gesture — voltage paths tracing the memory of ancient modal systems through contemporary circuits. Each patch is a temporary architecture, a ritual space where acoustic instruments meet electronic potential.
+      </div>
+    </div>
+  </section>
+
+  <!-- Journal / Essays -->
+  <section class="journal">
+    <h2>Journal & Reflections</h2>
+
+    <div class="journal-entry">
+      <h3>On Imperfection</h3>
+      <p>The lavta's frets are deliberately uneven — microtones carved into the neck like geological strata. When I place my fingers on them, I'm touching the edges of multiple tuning systems at once. The modular synth is no different: voltage sag, thermal drift, the unpredictable bloom of feedback. These aren't flaws. They're the signature of presence, the proof that sound is happening now, in this room, with these hands, this electricity.</p>
+    </div>
+
+    <div class="journal-entry">
+      <h3>Field Recording as Memory</h3>
+      <p>I recorded the sound of waves in Nafplion, the call to prayer in Smyrna, the hum of cicadas by the Mediterranean sea. When I feed these into Morphagene, slowing them down, layering them with synthesized drones, they become something else — not a document of a place, but a feeling of having been there. Sound carries memory better than photographs. It moves through you.</p>
+    </div>
+
+    <div class="journal-entry">
+      <h3>間 (Ma) – The Space Between</h3>
+      <p>Japanese concept: ma — the pause, the silence, the negative space that gives meaning to sound. In Persian music, it's the tahrir, the microtonal ornament that bends between notes. In modular synthesis, it's the moment when the envelope opens and you wait for the filter to bloom. Every tradition understands that music lives in the breath between phrases.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact">
+    <h2>Contact</h2>
+    <p>For collaborations, residencies, commissions, and sound installations.</p>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea rows="6" placeholder="Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <a href="mailto:ioannisv@me.com" class="mailto-link">ioannisv@me.com</a>
+    <p>
+        <a class="social-link" href="https://instagram.com/levantnoir.music"
+   target="_blank" rel="noopener" aria-label="Levant Noir on Instagram">
+    <!-- Instagram icon (SVG) -->
+    <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.6-2.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+    </svg>
+    <span>levantnoir.music</span>
+    </a></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Levant Noir · Ioannis Valasakis · All sounds and compositions registered</p>
+  </footer>
+
+  <script>
+    // ─────────────────────────────────────────────────────────────
+    // UŞŞAK MAKAM GENERATIVE SYNTHESIS
+    // ─────────────────────────────────────────────────────────────
+    const ussakMakamCents = [0,90,294,498,702,792,996,1200];
+    const baseFrequency = 110;  // A2
+    const numVoices = 4;
+
+    function centsToRatio(c){ return Math.pow(2, c/1200); }
+    function getUssakFrequencies(base){ return ussakMakamCents.map(c => base * centsToRatio(c)); }
+
+    // Weighted choice favouring 1, 3, 5, b7
+    function selectWeightedNote(freqs){
+      const weights = [3,1,3,1,3,1,2,1];
+      const total = weights.reduce((a,b)=>a+b,0);
+      let r = Math.random()*total;
+      for(let i=0;i<weights.length;i++){ r -= weights[i]; if(r<=0) return freqs[i]; }
+      return freqs[0];
+    }
+
+    let audioContext = null, masterGain = null;
+    let isPlaying = false, oscillators = [], gainNodes = [], lfoNodes = [];
+
+    function initAudio(){
+      if(!audioContext){
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioContext.createGain();
+        masterGain.connect(audioContext.destination);
+        masterGain.gain.value = 0;
+      }
+    }
+
+    function startAmbientSynthesis(){
+      initAudio();
+      if(audioContext.state === 'suspended'){ audioContext.resume(); }
+
+      const freqs = getUssakFrequencies(baseFrequency);
+      masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 3);
+
+      for(let i=0;i<numVoices;i++){
+        setTimeout(()=>createGenerativeVoice(freqs,i), i*2000);
+      }
+      isPlaying = true;
+    }
+
+    function stopAmbientSynthesis(){
+      if(!audioContext) return;
+      masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 2);
+      setTimeout(()=>{
+        oscillators.forEach(o=>{ try{ o.stop(); }catch(e){} });
+        oscillators=[]; gainNodes=[]; lfoNodes=[]; isPlaying=false;
+      }, 2100);
+    }
+
+    function createGenerativeVoice(freqs, idx){
+      if(!isPlaying) return;
+      const now = audioContext.currentTime;
+      const freq = selectWeightedNote(freqs);
+      const detune = (Math.random()-0.5)*8;
+
+      const osc = audioContext.createOscillator();
+      const waveforms = ['sine','triangle','sine','sine'];
+      osc.type = waveforms[Math.floor(Math.random()*waveforms.length)];
+      osc.frequency.value = freq; osc.detune.value = detune;
+
+      const gain = audioContext.createGain(); gain.gain.value = 0;
+
+      const lfo = audioContext.createOscillator(); lfo.frequency.value = 0.1 + Math.random()*0.3;
+      const lfoGain = audioContext.createGain(); lfoGain.gain.value = 0.15;
+
+      const filter = audioContext.createBiquadFilter(); filter.type = 'lowpass';
+      filter.frequency.value = 800 + Math.random()*1200; filter.Q.value = 1 + Math.random()*2;
+
+      const filterLfo = audioContext.createOscillator(); filterLfo.frequency.value = 0.05 + Math.random()*0.15;
+      const filterLfoGain = audioContext.createGain(); filterLfoGain.gain.value = 300;
+
+      lfo.connect(lfoGain); lfoGain.connect(gain.gain);
+      filterLfo.connect(filterLfoGain); filterLfoGain.connect(filter.frequency);
+
+      osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
+
+      const duration = 8 + Math.random()*12;
+      const attack = 2 + Math.random()*3;
+      const release = 2 + Math.random()*3;
+      const sustain = 0.08 + Math.random()*0.12;
+
+      gain.gain.linearRampToValueAtTime(sustain, now + attack);
+      gain.gain.setValueAtTime(sustain, now + duration - release);
+      gain.gain.linearRampToValueAtTime(0, now + duration);
+
+      osc.start(now); lfo.start(now); filterLfo.start(now);
+      osc.stop(now + duration); lfo.stop(now + duration); filterLfo.stop(now + duration);
+
+      oscillators.push(osc, lfo, filterLfo); gainNodes.push(gain, lfoGain, filterLfoGain);
+
+      const nextDelay = (duration * 0.5) + Math.random()*5000;
+      setTimeout(()=>createGenerativeVoice(freqs, idx), nextDelay);
+    }
+
+    // Play/Pause button — single, robust handler
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('audioToggle');
+      if(!toggleBtn) return;
+
+      toggleBtn.addEventListener('click', () => {
+        if(!isPlaying){
+          toggleBtn.textContent = '⏸ ambient sound';
+          toggleBtn.classList.add('is-playing');
+          toggleBtn.setAttribute('aria-pressed','true');
+          startAmbientSynthesis();
+        }else{
+          toggleBtn.textContent = '▶︎ ambient sound';
+          toggleBtn.classList.remove('is-playing');
+          toggleBtn.setAttribute('aria-pressed','false');
+          stopAmbientSynthesis();
+        }
+      });
+    });
+
+    function handleSubmit(e){
+      e.preventDefault();
+      alert('Thank you for your message. This is a demo form.');
+    }
+
+    // Smooth fade-in on scroll
+    const observerOptions = { threshold:0.1, rootMargin:'0px 0px -50px 0px' };
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.opacity='1';
+          entry.target.style.transform='translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section=>{
+      section.style.opacity='0';
+      section.style.transform='translateY(30px)';
+      section.style.transition='opacity .8s ease, transform .8s ease';
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
