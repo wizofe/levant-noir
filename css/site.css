@@ -229,7 +229,10 @@ svg { display: block; }
 .player__link:hover { color: var(--dark-ink); }
 .player__stop { flex: none; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(239, 233, 221, 0.35); }
 .player__stop:hover { border-color: var(--dark-ink); }
-.player.is-failed .player__progress, .player.is-failed .player__time { display: none; }
+.player.is-failed .player__progress, .player.is-failed .player__time, .player.is-failed .player__toggle { display: none; }
+.player.is-failed .player__title { white-space: normal; flex: 1 1 auto; max-width: none; }
+.player.is-failed .player__link { display: inline; color: var(--dark-ink); }
+.player.is-failed { border-radius: 20px; }
 .sc-host { position: absolute; width: 1px; height: 1px; overflow: hidden; left: -9999px; top: 0; }
 .sc-host iframe { width: 300px; height: 80px; border: 0; }
 

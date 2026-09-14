@@ -25,7 +25,7 @@ original-photos/    camera originals, kept out of git (see .gitignore)
 
 ## Sound behaviour
 
-Nothing loads from SoundCloud until a visitor presses play. The player script then loads the SoundCloud Widget API once, creates a single off-screen widget, and drives the play buttons and the bar at the foot of the page from it. If the API cannot load, the bar offers the track on SoundCloud instead. Playback continues while the visitor reads and can be paused or stopped from the bar anywhere on the page.
+Nothing plays until a visitor presses play. The small SoundCloud API script is fetched when a play button is first hovered, focused or touched, so that the press itself can start sound inside the browser's gesture window; the player iframe is created only on the press. One off-screen widget then drives every play button and the bar at the foot of the page. If the API or a track cannot load, the bar says so and offers the track on SoundCloud. Playback continues while the visitor reads and can be paused or stopped from the bar anywhere on the page; Escape pauses; Stop returns focus to the track's play button.
 
 ## Local preview
 
