@@ -24,7 +24,7 @@ original-photos/    camera originals, kept out of git (see .gitignore)
 - **Writing** is curated as a distinct nocturnal chamber on `index.html` with full essays and lineage hosted on `writing.html`.
 - **Photographs** are used only beside the sound or the story they belong to. To add one, export renditions at three widths in JPEG and WebP with EXIF removed (the originals carry GPS), then reference them with `<picture>` as the existing two do.
 - **Wudd** is hosted on its own standalone page (`wudd.html`) to preserve portfolio curatorial focus.
-- **Enquiries** are direct `mailto:` links to `contact@levantnoir.scot`.
+- **Enquiries** are direct `mailto:` links to `hello@levantnoir.scot`.
 
 ## Sound behaviour
 
