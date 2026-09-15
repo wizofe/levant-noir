@@ -1,13 +1,14 @@
 # levantnoir.scot
 
-The personal site of **Ioannis Valasakis**, composer, performer and sound artist in Glasgow. *Levant Noir* is the performance identity; *Wudd*, a sound and breath practice for pregnancy, is presented as a project in development.
+The personal portfolio and sound archive of **Ioannis Valasakis** (**Levant Noir**), composer, performer and sound artist in Glasgow. *Wudd*, a sound and breath practice for pregnancy in development, is maintained as a separate standalone page (`wudd.html`).
 
-The site is one static page: HTML, one stylesheet, one script, no build step. It is deployed on Vercel from this repository.
+The site is built with vanilla static assets: HTML, one stylesheet, one script, no build step. It is deployed on Vercel from this repository.
 
 ## Structure
 
 ```text
-index.html          the page: hero, statement, listening room, performance, Wudd, writing, about, enquiries
+index.html          the main portfolio: hero, statement, listening room, performance, writing, about, enquiries
+wudd.html           standalone project page for Wudd (sound and breath practice)
 css/site.css        design tokens and layout (direction B, "Shore")
 js/player.js        listening-room player: one SoundCloud widget created on first play, persistent bar
 images/             responsive JPEG + WebP renditions (location data stripped) and the Open Graph image
@@ -18,10 +19,10 @@ original-photos/    camera originals, kept out of git (see .gitignore)
 
 ## Editing content
 
-- **Recordings** live in the `ol.tracks` list in `index.html`. Each `li` carries `data-track` (an id), `data-url` (the SoundCloud track URL) and `data-title`. Any `button[data-play]` with the same id plays it, so the "Listen first" block at the top can point at any track.
+- **Recordings** live in the `ol.tracks` list in `index.html`. Each `li` carries `data-track` (an id), `data-url` (the SoundCloud track URL) and `data-title`. Any `button[data-play]` with the same id plays it, so the "Listen first" block at the top can point at any track. Technical dossiers use native `<details class="track__tech">` elements.
 - **Photographs** are used only beside the sound or the story they belong to. To add one, export renditions at three widths in JPEG and WebP with EXIF removed (the originals carry GPS), then reference them with `<picture>` as the existing two do.
-- **Wudd** is deliberately labelled as in development; do not add tiers, prices, partners or claims until they are real.
-- **Enquiries** are `mailto:` links with pre-filled subjects; there is no form and no backend.
+- **Wudd** is hosted on its own standalone page (`wudd.html`) to preserve portfolio curatorial focus.
+- **Enquiries** are direct `mailto:` links to `contact@levantnoir.scot`.
 
 ## Sound behaviour
 

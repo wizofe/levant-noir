@@ -1,4 +1,4 @@
-/* levantnoir.scot — direction B "Shore"
+/* levantnoir.scot: direction B "Shore"
    Paper ground, Newsreader for reading, Instrument Sans for labels, Plex Mono for method lines.
    One committed light look; every colour is a token below. */
 
@@ -152,6 +152,12 @@ svg { display: block; }
 .track__title { font-size: 24px; font-variation-settings: 'opsz' 24; }
 .track__desc { font-family: var(--sans); font-size: 13px; line-height: 1.5; color: var(--muted); }
 .track__method { font-family: var(--mono); font-size: 12px; line-height: 1.55; color: var(--muted); padding-top: 6px; }
+.track__tech { font-family: var(--mono); font-size: 12px; line-height: 1.55; color: var(--muted); padding-top: 6px; }
+.track__tech summary { cursor: pointer; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust-deep); list-style: none; user-select: none; }
+.track__tech summary::-webkit-details-marker { display: none; }
+.track__tech summary::before { content: '+ '; font-family: var(--mono); }
+.track__tech[open] summary::before { content: '− '; }
+.track__tech p { margin-top: 6px; }
 .track__meta { font-family: var(--sans); font-size: 13px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; padding-top: 6px; white-space: nowrap; }
 .track.is-playing .track__title { color: var(--rust); }
 
@@ -188,13 +194,16 @@ svg { display: block; }
 .essay__title { font-size: 24px; font-variation-settings: 'opsz' 24; }
 .essay p { font-size: 17px; line-height: 1.6; }
 .names { font-family: var(--sans); font-size: 14px; line-height: 1.7; color: var(--muted); }
+.lineage { font-family: var(--sans); font-size: 13px; line-height: 1.65; color: var(--muted); }
 
 /* About */
-.bio { grid-column: 4 / span 7; font-size: clamp(19px, 1.5vw, 21px); line-height: 1.5; font-weight: 300; max-width: 66ch; }
+.bio { grid-column: 4 / span 8; display: flex; flex-direction: column; gap: 16px; max-width: 68ch; }
+.bio p { font-size: clamp(17px, 1.2vw, 19px); line-height: 1.65; font-weight: 300; }
 
 /* Enquiries */
-.enquiries { grid-column: 4 / span 9; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
-.enq { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-top: 1px solid var(--rule); font-size: 22px; }
+.contact__content { grid-column: 4 / span 9; display: flex; flex-direction: column; }
+.enquiries { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+.enq { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-top: 1px solid var(--rule); font-size: 20px; }
 .enq > a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--rule); }
 .enq > a:hover { text-decoration-color: currentColor; }
 .enq:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
@@ -244,7 +253,7 @@ svg { display: block; }
   .sec__aside, .sec__main, .sec__side, .figure, .tracks, .essays, .bio, .enquiries { width: 100%; }
   .sec__title { font-size: 26px; }
   .track { grid-template-columns: 44px 1fr; gap: 12px 14px; }
-  .track__method { grid-column: 2; padding-top: 0; }
+  .track__method, .track__tech { grid-column: 2; padding-top: 0; }
   .track__meta { grid-column: 2; text-align: left; padding-top: 0; white-space: normal; }
   .figure img { max-height: 420px; object-fit: cover; }
   .wudd { margin-left: 0; margin-right: 0; padding: 32px var(--gutter); }
