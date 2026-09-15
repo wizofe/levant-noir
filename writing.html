@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Writing &amp; Lineage · Levant Noir · Ioannis Valasakis</title>
+  <meta name="description" content="Critical miniatures on listening, microtonal fretwork, acoustic memory, and aesthetic lineage by Ioannis Valasakis (Levant Noir).">
+  <meta name="theme-color" content="#f4efe6">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+  <style>
+    .page-writings {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .page-writings__header {
+      padding: 28px var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--rule-subtle);
+    }
+    .page-writings__nav-back {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.25s ease;
+    }
+    .page-writings__nav-back:hover {
+      color: var(--copper);
+    }
+    .page-writings__hero {
+      padding: clamp(64px, 9vw, 112px) var(--gutter) clamp(40px, 5vw, 64px);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .page-writings__title {
+      font-size: clamp(40px, 5.5vw, 76px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-top: 16px;
+      max-width: 18ch;
+    }
+    .page-writings__subtitle {
+      font-family: var(--sans);
+      font-size: clamp(16px, 1.4vw, 19px);
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 58ch;
+      margin-top: 24px;
+    }
+    .page-writings__content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 var(--gutter) clamp(80px, 10vw, 140px);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 32px;
+      row-gap: 64px;
+    }
+    .writings-stream {
+      grid-column: 1 / span 8;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(56px, 7vw, 96px);
+    }
+    .writings-sidebar {
+      grid-column: 10 / span 3;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .writing-entry {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-bottom: clamp(40px, 5vw, 64px);
+      border-bottom: 1px solid var(--rule-subtle);
+    }
+    .writing-entry:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .writing-entry__meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--copper);
+      text-transform: uppercase;
+    }
+    .writing-entry__title {
+      font-size: clamp(28px, 3vw, 38px);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+    .writing-entry__body {
+      font-size: clamp(18px, 1.35vw, 21px);
+      line-height: 1.7;
+      color: var(--ink-soft);
+      font-variation-settings: 'opsz' 20;
+    }
+    .lineage-card {
+      background: var(--paper-tint);
+      padding: 28px;
+      border: 1px solid var(--rule-subtle);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lineage-card__title {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .lineage-card__body {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+    @media (max-width: 899px) {
+      .writings-stream, .writings-sidebar {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body class="page-writings">
+  <header class="page-writings__header">
+    <a class="page-writings__nav-back" href="/">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Levant Noir</span>
+    </a>
+    <span class="label" style="letter-spacing: 0.14em;">Archive &middot; Critical Texts</span>
+  </header>
+
+  <main>
+    <div class="page-writings__hero">
+      <p class="label" style="color: var(--copper);">Theory &middot; Acoustics &middot; Memory</p>
+      <h1 class="page-writings__title">Critical miniatures on listening, gesture, and signal decay.</h1>
+      <p class="page-writings__subtitle">Texts examining how acoustic materials, tactile frets, and generative algorithms converse at the intersection of Mediterranean and Scottish sonic geographies.</p>
+    </div>
+
+    <div class="page-writings__content">
+      <div class="writings-stream">
+        <article class="writing-entry" id="on-imperfection">
+          <div class="writing-entry__meta">
+            <span>Nocturne 01</span>
+            <span>&middot;</span>
+            <span>Acoustic Materiality</span>
+          </div>
+          <h2 class="writing-entry__title">On imperfection</h2>
+          <div class="writing-entry__body">
+            <p>The lavta’s frets are movable gut, deliberately displaced to accommodate microtones set into the neck like geological strata. When the fingers press between them, they encounter the friction of multiple historical tuning systems coexisting on a single fingerboard. Analogue electronics share this stubborn physicality: voltage fluctuations, component drift, the unpredictable bloom of a filter on the edge of oscillation. These are not technical failures to be calibrated away; they are the physical signature of the present moment, proof that sound is taking place in a specific room, through material that resists total control.</p>
+          </div>
+        </article>
+
+        <article class="writing-entry" id="field-recording-as-palimpsest">
+          <div class="writing-entry__meta">
+            <span>Nocturne 02</span>
+            <span>&middot;</span>
+            <span>Spatial Resonance</span>
+          </div>
+          <h2 class="writing-entry__title">Field recording as palimpsest</h2>
+          <div class="writing-entry__body">
+            <p>A field recording is never an objective document of a landscape; it is a record of an encounter. In recording coastal wind at Cromarty or water inside an empty cistern in Nafplion, the microphone captures an acoustic signature that begins to decay the moment it is committed to storage. When these recordings are stretched, looped, and filtered through granular buffers, they cease to function as sonic postcards. They become acoustic palimpsests: sites where geographical fact collides with the fallibility of human memory.</p>
+          </div>
+        </article>
+
+        <article class="writing-entry" id="the-articulation-of-absence">
+          <div class="writing-entry__meta">
+            <span>Nocturne 03</span>
+            <span>&middot;</span>
+            <span>Psychoacoustics</span>
+          </div>
+          <h2 class="writing-entry__title">The articulation of absence</h2>
+          <div class="writing-entry__body">
+            <p>In modal improvisation, a phrase is defined by what precedes and follows it. The decay of a plucked gut string leaves an acoustic vacuum that demands active listening. In modular synthesis, this same tension governs the release stage of an envelope: the space where the sound retreats and reveals the room itself. Rather than treating silence as negative space to be populated with electronic pads, the work relies on stillness as a structural weight. The music exists in the breath between gestures.</p>
+          </div>
+        </article>
+      </div>
+
+      <aside class="writings-sidebar">
+        <div class="lineage-card">
+          <h3 class="lineage-card__title">Aesthetic Lineage</h3>
+          <p class="lineage-card__body">The work of Levant Noir dialogues with the exploratory traditions of contemporary modal string performance and experimental sound art: the Mediterranean investigations of Michalis Siganidis and Ross Daly; the Highland and insular ecologies of Erland Cooper and Brìghde Chaimbeul; the tactile acoustic extensions of Laura Cannell and Úna Monaghan; and the analogue compositional architectures of Caterina Barbieri and Suzanne Ciani.</p>
+        </div>
+
+        <div class="lineage-card" style="background: transparent; border: 1px dashed var(--rule-subtle);">
+          <h3 class="lineage-card__title" style="color: var(--copper);">Location &middot; Fieldwork</h3>
+          <p class="lineage-card__body">Field recordings and acoustic captures gathered across Glasgow, the Black Isle (Cromarty Firth), the Isle of Rùm, Nafplion, and the Dionysades islets of eastern Crete.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer" style="margin-top: auto; border-top: 1px solid var(--rule-subtle);">
+    <p>Levant Noir &middot; The electroacoustic practice of Ioannis Valasakis.</p>
+    <a href="/" style="text-decoration: underline;">Return to Main Portfolio</a>
+  </footer>
+</body>
+</html>

@@ -7,9 +7,10 @@ The site is built with vanilla static assets: HTML, one stylesheet, one script, 
 ## Structure
 
 ```text
-index.html          the main portfolio: hero, statement, listening room, performance, writing, about, enquiries
+index.html          the main portfolio: hero, statement, listening room, performance, writing chamber, about, enquiries
+writing.html        dedicated reading page for critical miniatures, acoustic philosophy and lineage
 wudd.html           standalone project page for Wudd (sound and breath practice)
-css/site.css        design tokens and layout (direction B, "Shore")
+css/site.css        design tokens and layout (GSA tactility, Tokyo/Seoul spaciousness, London improv energy)
 js/player.js        listening-room player: one SoundCloud widget created on first play, persistent bar
 images/             responsive JPEG + WebP renditions (location data stripped) and the Open Graph image
 favicon.svg
@@ -20,6 +21,7 @@ original-photos/    camera originals, kept out of git (see .gitignore)
 ## Editing content
 
 - **Recordings** live in the `ol.tracks` list in `index.html`. Each `li` carries `data-track` (an id), `data-url` (the SoundCloud track URL) and `data-title`. Any `button[data-play]` with the same id plays it, so the "Listen first" block at the top can point at any track. Technical dossiers use native `<details class="track__tech">` elements.
+- **Writing** is curated as a distinct nocturnal chamber on `index.html` with full essays and lineage hosted on `writing.html`.
 - **Photographs** are used only beside the sound or the story they belong to. To add one, export renditions at three widths in JPEG and WebP with EXIF removed (the originals carry GPS), then reference them with `<picture>` as the existing two do.
 - **Wudd** is hosted on its own standalone page (`wudd.html`) to preserve portfolio curatorial focus.
 - **Enquiries** are direct `mailto:` links to `contact@levantnoir.scot`.
