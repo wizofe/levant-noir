@@ -10,6 +10,7 @@ The site is built with vanilla static assets: HTML, one stylesheet, one script, 
 index.html          the main portfolio: hero, statement, listening room, performance, writing chamber, about, enquiries
 writing.html        dedicated reading page for critical miniatures, acoustic philosophy and lineage
 wudd.html           standalone project page for Wudd (sound and breath practice)
+brand.html          studio brand identity & material specification by Teine Studio (Eilidh Morrison)
 css/site.css        design tokens and layout (GSA tactility, Tokyo/Seoul spaciousness, London improv energy)
 js/player.js        listening-room player: one SoundCloud widget created on first play, persistent bar
 images/             responsive JPEG + WebP renditions (location data stripped) and the Open Graph image

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brand Identity · Rev. C Warm · Levant Noir · Teine Studio</title>
+  <meta name="description" content="The Levant Noir visual identity, Rev. C 'Warm', by Teine Studio, Glasgow: the Found Palette, the typographic system, and the Bothy Principle.">
+  <meta name="theme-color" content="#f8f8f7">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/site.css?v=5">
+  <style>
+    .page-brand {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-header {
+      padding: 24px var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--rule-subtle);
+    }
+    .brand-back {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.25s ease;
+    }
+    .brand-back:hover { color: var(--rowan); }
+
+    .brand-hero {
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(56px, 8vw, 104px) var(--gutter) clamp(36px, 4vw, 56px);
+      border-bottom: 2px solid var(--rowan);
+    }
+    .brand-hero__title {
+      font-size: clamp(40px, 6vw, 84px);
+      font-weight: 500;
+      line-height: 0.94;
+      letter-spacing: -0.02em;
+      margin-top: 18px;
+      max-width: 16ch;
+    }
+    .brand-hero__principle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(19px, 1.7vw, 24px);
+      line-height: 1.4;
+      color: var(--ink-soft);
+      max-width: 46ch;
+      margin-top: 28px;
+      padding-left: 22px;
+      border-left: 2px solid var(--sea-pink);
+    }
+
+    .brand-section {
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(56px, 7vw, 96px) var(--gutter);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 32px;
+      row-gap: 40px;
+      border-bottom: 1px solid var(--rule-subtle);
+    }
+    .brand-section__aside {
+      grid-column: 1 / span 3;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .brand-section__aside .num {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--rowan);
+    }
+    .brand-section__aside h2 {
+      font-size: clamp(24px, 2.2vw, 30px);
+      font-weight: 500;
+    }
+    .brand-section__body { grid-column: 5 / span 8; min-width: 0; }
+    .brand-lede {
+      font-size: clamp(18px, 1.4vw, 21px);
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 60ch;
+    }
+
+    /* Positioning line */
+    .brand-positioning {
+      grid-column: 1 / -1;
+      font-size: clamp(24px, 3vw, 40px);
+      line-height: 1.25;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      max-width: 28ch;
+    }
+    .brand-shortform {
+      grid-column: 1 / -1;
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    /* Palette */
+    .swatches {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 20px;
+    }
+    .swatch { display: flex; flex-direction: column; gap: 10px; }
+    .swatch__chip {
+      height: 96px;
+      border-radius: 2px;
+      border: 1px solid var(--rule);
+    }
+    .swatch__name {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .swatch__hex {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--rowan);
+    }
+    .swatch__use {
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .brand-proportion {
+      grid-column: 1 / -1;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      padding-top: 4px;
+    }
+    .brand-proportion b { color: var(--ink); font-weight: 700; }
+
+    /* Typography */
+    .type-voices {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .type-voice {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 28px;
+      align-items: baseline;
+      padding-top: 28px;
+      border-top: 1px solid var(--rule-subtle);
+    }
+    .type-voice:first-child { border-top: none; padding-top: 0; }
+    .type-specimen__serif {
+      font-family: var(--serif);
+      font-size: clamp(30px, 3.4vw, 46px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .type-specimen__serif em { font-style: italic; color: var(--rowan); }
+    .type-specimen__grotesk {
+      font-family: var(--sans);
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .type-specimen__mono {
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.7;
+    }
+    .type-note { display: flex; flex-direction: column; gap: 6px; }
+    .type-note__name {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .type-note__role {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rowan);
+    }
+    .type-note__body {
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    /* Principles */
+    .principles {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 28px 40px;
+    }
+    .principle { display: flex; flex-direction: column; gap: 8px; }
+    .principle__mark {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--rowan);
+    }
+    .principle h3 { font-size: 21px; font-weight: 500; }
+    .principle p {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* Colophon */
+    .colophon {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 32px;
+    }
+    .colophon dt {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .colophon dd {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    @media (max-width: 899px) {
+      .brand-section { display: flex; flex-direction: column; gap: 28px; }
+      .brand-section__aside, .brand-section__body { width: 100%; }
+      .type-voice { grid-template-columns: 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body class="page-brand">
+  <header class="brand-header">
+    <a class="brand-back" href="index.html#contact">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Levant Noir</span>
+    </a>
+    <span class="label">Teine Studio · Rev. C Warm</span>
+  </header>
+
+  <main>
+    <div class="brand-hero">
+      <p class="label" style="color: var(--rowan);">Brand Identity · Rev. C · Warm · September 2026</p>
+      <h1 class="brand-hero__title">Identity system for Levant Noir</h1>
+      <p class="brand-hero__principle">The Bothy Principle: the door is unlocked and the hearth is lit. Same rigour as the cold system, softer light, a ledger kept in a warm room rather than a cold one.</p>
+    </div>
+
+    <section class="brand-section" aria-labelledby="position-heading">
+      <div class="brand-section__aside">
+        <span class="num">01</span>
+        <h2 id="position-heading">Position</h2>
+      </div>
+      <div class="brand-section__body" style="display: flex; flex-direction: column; gap: 24px;">
+        <p class="brand-positioning">Modal inheritance carried up the Atlantic coast, set down in a room with a fire in it, and answered back by electronics.</p>
+        <p class="brand-shortform">Levant Noir is the electroacoustic practice of composer and researcher Ioannis Valasakis, a multi-instrumentalist working between Eastern Mediterranean modal memory, North Atlantic coastal geography, and living electronics held in the same room. The dislocation is the subject, not a texture.</p>
+      </div>
+    </section>
+
+    <section class="brand-section" aria-labelledby="palette-heading">
+      <div class="brand-section__aside">
+        <span class="num">02</span>
+        <h2 id="palette-heading">The Found Palette</h2>
+      </div>
+      <div class="brand-section__body">
+        <p class="brand-lede">Nothing here came out of a fan deck. Each tone was found first and specified afterwards: rowan berries against a gable wall in October, sea pinks on a shore rock in June, a limewashed distillery gable in low sun. The warmth is red, not earth; no ochre, no copper, no sand enters the system at any scale.</p>
+      </div>
+
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #1c1a1d;"></div>
+          <p class="swatch__name">Nightfall Ink</p>
+          <p class="swatch__hex">#1C1A1D</p>
+          <p class="swatch__use">The only ink in the system. All type, rules and jacket board.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #a9382a;"></div>
+          <p class="swatch__name">Rowan</p>
+          <p class="swatch__hex">#A9382A</p>
+          <p class="swatch__use">The voice, not an accent. Display, section marks, rules, links. Never behind body copy.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #c86a73;"></div>
+          <p class="swatch__name">Sea Pink</p>
+          <p class="swatch__hex">#C86A73</p>
+          <p class="swatch__use">Foil, edge staining, edition numbers. Never carries text at any size.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #a85182;"></div>
+          <p class="swatch__name">Foxglove</p>
+          <p class="swatch__hex">#A85182</p>
+          <p class="swatch__use">Print and textile only. Bound sleeve, research series, cassette shell.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #6e5670;"></div>
+          <p class="swatch__name">Heather Dusk</p>
+          <p class="swatch__hex">#6E5670</p>
+          <p class="swatch__use">The system's one cool note, and still warm-cast. Mounts, scrim wash on stage.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #2c4a42;"></div>
+          <p class="swatch__name">Warehouse Green</p>
+          <p class="swatch__hex">#2C4A42</p>
+          <p class="swatch__use">The only permitted dark field. Label face, spine, slipcase, wax seal.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #f0e4e3;"></div>
+          <p class="swatch__name">Thrift Pale</p>
+          <p class="swatch__hex">#F0E4E3</p>
+          <p class="swatch__use">Printed stock only, so the warmth is fibre. Never a screen ground.</p>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background: #f8f8f7;"></div>
+          <p class="swatch__name">Lime Wash</p>
+          <p class="swatch__hex">#F8F8F7 · #F1F0EE</p>
+          <p class="swatch__use">The ground for every page and screen. Never cream, never sand. Do not darken.</p>
+        </div>
+      </div>
+
+      <p class="brand-proportion"><b>Proportion · warm</b> &nbsp; Lime Wash 48 · panel 17 · Ink 12 · Rowan 9 · Sea Pink 7 · Warehouse 4 · Heather 3</p>
+    </section>
+
+    <section class="brand-section" aria-labelledby="type-heading">
+      <div class="brand-section__aside">
+        <span class="num">03</span>
+        <h2 id="type-heading">Typographic System</h2>
+      </div>
+      <div class="brand-section__body">
+        <p class="brand-lede">Three voices, all open-licence and served from Google Fonts. A variable literary serif for everything read at length, opening up at reading size and tightening for display; a humanist grotesque with a faint technical edge for structure and labelling; and a typewriter monospace for measurement, because a cask end is chalked by hand, not typeset.</p>
+      </div>
+
+      <div class="type-voices">
+        <div class="type-voice">
+          <p class="type-specimen__serif">Between Two<br>Shores <em>· lavta, mandolin, living electronics</em></p>
+          <div class="type-note">
+            <p class="type-note__name">Newsreader</p>
+            <p class="type-note__role">Primary · Display &amp; Text</p>
+            <p class="type-note__body">A variable literary serif, the register of a hymn book and a bond ledger. Display 400 with optical sizing dialled up; text 400 at 19 px / 1.65. Italic carries subtitles and any line meant to be heard in the artist's voice.</p>
+          </div>
+        </div>
+        <div class="type-voice">
+          <p class="type-specimen__grotesk">Performance · Live Set, scalable for listening rooms, galleries and historic stone spaces.</p>
+          <div class="type-note">
+            <p class="type-note__name">Space Grotesk</p>
+            <p class="type-note__role">Secondary · Structure</p>
+            <p class="type-note__body">A humanist grotesque with a faint technical edge, tuned to the electronics. Eyebrows and labels at 700, +12% tracking, uppercase. Captions and riders at 400.</p>
+          </div>
+        </div>
+        <div class="type-voice">
+          <p class="type-specimen__mono">LN·01 · GLASGOW · 2025 · 2:06<br>55°51′N 4°15′W · ED. 041/300 · PATCH 7B</p>
+          <div class="type-note">
+            <p class="type-note__name">Space Mono</p>
+            <p class="type-note__role">Tertiary · Measurement</p>
+            <p class="type-note__body">The chalk mark on the cask end. Durations, coordinates, catalogue and edition numbers, dates. At 10–12 px, 700, +16% tracking, uppercase. Never for sentences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-section" aria-labelledby="principles-heading">
+      <div class="brand-section__aside">
+        <span class="num">04</span>
+        <h2 id="principles-heading">The Bothy Principle</h2>
+      </div>
+      <div class="brand-section__body">
+        <p class="brand-lede">A bothy asks nothing of you. The door is unlocked, the hearth is laid, and there is a visitors' book in strangers' handwriting on the sill. The identity behaves the same way.</p>
+      </div>
+
+      <div class="principles">
+        <div class="principle">
+          <span class="principle__mark">i</span>
+          <h3>Unlocked, not marketed</h3>
+          <p>Work is left where it can be found. No campaign architecture, no countdown.</p>
+        </div>
+        <div class="principle">
+          <span class="principle__mark">ii</span>
+          <h3>The hearth is central</h3>
+          <p>Warmth carries the system; Rowan and Sea Pink do the work. Cool tones hold the structure behind them.</p>
+        </div>
+        <div class="principle">
+          <span class="principle__mark">iii</span>
+          <h3>The visitors' book</h3>
+          <p>Every artefact carries a hand mark: a number, a date, an initial. Evidence of one body in one room.</p>
+        </div>
+        <div class="principle">
+          <span class="principle__mark">iv</span>
+          <h3>Weather is permitted</h3>
+          <p>Deckled edges, salt-shadowed board, drifting voltage. Exposure is not damage; it is the record.</p>
+        </div>
+        <div class="principle">
+          <span class="principle__mark">v</span>
+          <h3>Nothing explained twice</h3>
+          <p>Names, places and dates are stated once, in the smallest type on the page, and left to be looked up.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-section" aria-labelledby="colophon-heading" style="border-bottom: none;">
+      <div class="brand-section__aside">
+        <span class="num">05</span>
+        <h2 id="colophon-heading">Colophon</h2>
+      </div>
+      <div class="brand-section__body">
+        <dl class="colophon">
+          <div>
+            <dt>Coordinates</dt>
+            <dd>55°51′N 4°15′W · Glasgow<br>35°19′N 25°08′E · Crete</dd>
+          </div>
+          <div>
+            <dt>Core setup</dt>
+            <dd>Mandolin · lavta · voice &amp; spoken word · modular synthesis · tape loops · generative software · field recordings</dd>
+          </div>
+          <div>
+            <dt>Prepared by</dt>
+            <dd>Eilidh Morrison<br>Teine Studio, Glasgow</dd>
+          </div>
+          <div>
+            <dt>Never</dt>
+            <dd>World-music framing. Tartan, thistle or knotwork. Whisky-advert sunsets. Any brown, ochre, copper or sand.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="margin-top: auto; border-top: 1px solid var(--rule-subtle);">
+    <p>Levant Noir · brand identity · Rev. C Warm · Teine Studio.</p>
+    <a href="index.html" style="text-decoration: underline; text-underline-offset: 4px;">Return to Levant Noir</a>
+  </footer>
+</body>
+</html>
