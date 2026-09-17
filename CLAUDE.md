@@ -25,3 +25,13 @@ uv venv .venv   # if none exists
 ```
 
 Bump the `?v=N` on the `css/site.css` link when changing CSS so reloads are not cache-stale.
+
+## Pushing
+
+This repo belongs to the `wizofe` GitHub account, but the local SSH key authenticates as `depolarised`, and a global `url.git@github.com:.insteadOf https://github.com/` rewrite forces HTTPS back to SSH. So a plain `git push` is denied. Use the repo-local alias instead:
+
+```
+git pushw            # or: git pushw origin master
+```
+
+It switches the active `gh` account to `wizofe`, pushes over HTTPS (bypassing the SSH rewrite via the `gh` credential helper), and switches back to `depolarised`. The remote is HTTPS for this reason. A fully native `git push` would need a dedicated `wizofe` SSH key added to that account (a browser auth step to grant `gh` the key-add scope), which has not been done.
