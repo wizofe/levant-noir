@@ -184,6 +184,7 @@ svg { display: block; }
 .track__idx { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; padding-top: 15px; }
 .track__body { display: flex; flex-direction: column; gap: 6px; }
 .track__title { font-size: 24px; font-variation-settings: 'opsz' 24; display: inline-flex; align-items: center; }
+.track__title .wt { margin-left: 0.3em; }
 .track-wave {
   display: none; align-items: flex-end; gap: 2px; height: 12px; margin-left: 10px; vertical-align: middle;
 }
@@ -202,11 +203,28 @@ svg { display: block; }
 .track__desc { font-family: var(--sans); font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 .track__method { font-family: var(--mono); font-size: 12px; line-height: 1.55; color: var(--muted); padding-top: 6px; }
 .track__tech { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--muted); padding-top: 6px; }
-.track__tech summary { cursor: pointer; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust-deep); list-style: none; user-select: none; }
+/* The disclosure is a control, so it borrows the play button's ring: a small ringed plus and a plain
+   underlined label in ink. Open, the plus turns to a cross. */
+.track__tech summary {
+  display: inline-flex; align-items: center; gap: 10px; padding: 4px 0; cursor: pointer; list-style: none; user-select: none;
+  font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.01em; line-height: 1.3; color: var(--ink);
+}
 .track__tech summary::-webkit-details-marker { display: none; }
-.track__tech summary::before { content: '+ '; font-family: var(--mono); }
-.track__tech[open] summary::before { content: '− '; }
-.track__tech p { margin-top: 6px; }
+.track__tech summary::before {
+  content: '+'; flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 14px; line-height: 1; padding-bottom: 1px;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.track__tech summary span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(28, 26, 29, 0.3); transition: text-decoration-color 0.25s ease; }
+.track__tech summary:hover { color: var(--rowan-deep); }
+.track__tech summary:hover::before { background: var(--rowan); border-color: var(--rowan); color: var(--limewash); }
+.track__tech summary:hover span { text-decoration-color: currentColor; }
+.track__tech[open] .when-closed, .track__tech:not([open]) .when-open { display: none; }
+.track__tech[open] summary::before { transform: rotate(45deg); background: var(--ink); color: var(--limewash); }
+.track__tech[open] summary:hover::before { background: var(--rowan); }
+.track__tech[open] > :not(summary) { animation: notes-in 0.3s ease both; }
+ notes-in { from { opacity: 0; transform: translateY(-4px); } }
+.track__tech p { margin-top: 10px; }
 .track__meta { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; padding-top: 8px; white-space: nowrap; }
 .track.is-playing .track__title { color: var(--rust); }
 
@@ -363,16 +381,18 @@ svg { display: block; }
 .player__time { flex: none; font-variant-numeric: tabular-nums; color: var(--dark-muted); }
 .player__progress { flex: 1 1 80px; height: 1px; background: rgba(245, 243, 241, 0.28); position: relative; }
 .player__bar { position: absolute; left: 0; top: -1px; height: 3px; width: 0%; background: var(--rowan); }
+/* The visible line is the bar above; the range input lies over it, unseen, for pointer and keyboard seeking. */
+.player__seek { position: absolute; left: 0; top: -14px; width: 100%; height: 29px; margin: 0; opacity: 0; cursor: pointer; }
+.player__seek:disabled { cursor: default; }
+.player__progress:has(.player__seek:focus-visible) { outline: 2px solid var(--on-image); outline-offset: 10px; border-radius: 2px; }
 .player__link { flex: none; color: var(--dark-muted); text-decoration: underline; text-underline-offset: 3px; }
 .player__link:hover { color: var(--dark-ink); }
 .player__stop { flex: none; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(239, 233, 221, 0.35); }
 .player__stop:hover { border-color: var(--dark-ink); }
 .player.is-failed .player__progress, .player.is-failed .player__time, .player.is-failed .player__toggle { display: none; }
 .player.is-failed .player__title { white-space: normal; flex: 1 1 auto; max-width: none; }
-.player.is-failed .player__link { display: inline; color: var(--dark-ink); }
+.player.is-failed .player__link { display: none; }
 .player.is-failed { border-radius: 20px; }
-.sc-host { position: absolute; width: 1px; height: 1px; overflow: hidden; left: -9999px; top: 0; }
-.sc-host iframe { width: 300px; height: 80px; border: 0; }
 
 /* Phone and small tablet */
 @media (max-width: 899px) {
@@ -412,11 +432,13 @@ svg { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .track__tech summary::before { transition: none; }
+  .track__tech[open] > :not(summary) { animation: none; }
 }
 
 @media print {
   .hero { height: auto; color: var(--ink); padding: 0 0 24px; }
-  .hero__picture, .hero::before, .hero::after, .player, .sc-host, .skip, .play { display: none; }
+  .hero__picture, .hero::before, .hero::after, .player, .skip, .play { display: none; }
   .hero__nav { display: none; }
   .sec, .wudd { display: block; margin-top: 32px; padding: 0; }
   .wudd { background: transparent; color: var(--ink); }

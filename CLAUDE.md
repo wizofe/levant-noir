@@ -1,8 +1,8 @@
 # CLAUDE.md, levant-noir
 
-Static personal site for Ioannis Valasakis (Levant Noir): electroacoustic composer and multi-instrumentalist. No build step. Plain HTML, one shared `css/site.css`, small JS player.
+Static personal site for Ioannis Valasakis (Levant Noir): electroacoustic composer and multi-instrumentalist. No build step. Plain HTML, one shared `css/site.css`, small JS player. All audio and video is self-hosted (`audio/`, `video/`); there is no SoundCloud or other third-party player, and none should be reintroduced.
 
-Pages: `index.html` (main), `writing.html` (critical texts), `brand.html` (Teine Studio identity dossier), `wudd.html` (sound/breath project).
+Pages: `index.html` (main), `work.html` (full catalogue of recordings, scores and sketches), `writing.html` (critical texts), `brand.html` (Teine Studio identity dossier), `wudd.html` (sound/breath project).
 
 ## Visual identity
 
@@ -25,6 +25,12 @@ uv venv .venv   # if none exists
 ```
 
 Bump the `?v=N` on the `css/site.css` link when changing CSS so reloads are not cache-stale.
+
+Seeking in the player needs HTTP Range support, which `http.server` lacks. When testing playback use `npx http-server -p 8137 -c-1 .` instead.
+
+## Media
+
+Masters live in `masters/` (git-ignored). Delivery files are made with `tools/encode-audio.sh <master> <slug>` (AAC 160k, one linear gain toward -14 LUFS, -1 dBTP ceiling, never compression) and `tools/encode-video.sh`. File names are versioned (`slug.v1.m4a`) because `vercel.json` caches media as immutable: re-encode under a new version, never the same name. Catalogue numbers: `LN` composition and installation, `SC` screen, `EX` experiments.
 
 ## Pushing (requirement)
 

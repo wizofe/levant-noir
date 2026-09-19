@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="images/shore-1400.webp" imagesrcset="images/shore-900.webp 900w, images/shore-1400.webp 1400w, images/shore-2000.webp 2000w" imagesizes="100vw" type="image/webp">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=5">
+  <link rel="stylesheet" href="css/site.css?v=7">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -68,9 +68,10 @@
       <div class="sec__aside">
         <p class="label">Listening room</p>
         <h2 id="listen-heading" class="sec__title">Selected recordings and site-specific studies.</h2>
+        <p class="meta"><a href="work.html">Full catalogue: screen, installation, experiments</a></p>
       </div>
       <ol class="tracks">
-        <li class="track" data-track="blackbirds" data-url="https://soundcloud.com/levant_noir/blackbirds-and-a-lavta" data-title="Blackbirds and a lavta">
+        <li class="track" id="ln-01" data-track="blackbirds" data-src="blackbirds-and-a-lavta.v1.m4a" data-details="work.html#ln-01" data-title="Blackbirds and a lavta">
           <span class="track__idx">LN&middot;01</span>
           <button class="play" type="button" data-play="blackbirds" aria-label="Play Blackbirds and a lavta" aria-pressed="false">
             <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
@@ -84,12 +85,12 @@
             <p class="track__desc">While improvising with my lavta last spring in Glasgow, I realised the blackbirds were answering my music. I decided to capture this live fragment as I tried to improvise with them. A single, unedited take, no electronics.</p>
           </div>
           <details class="track__tech">
-            <summary>Technical dossier</summary>
+            <summary><span>Technical dossier</span></summary>
             <p>lavta · single acoustic capture · open-window environmental resonance</p>
           </details>
           <p class="track__meta">Glasgow · 2025 · 2:06</p>
         </li>
-        <li class="track" data-track="oud" data-url="https://soundcloud.com/levant_noir/oud-texture" data-title="Oud texture (Smyrna)">
+        <li class="track" id="ln-02" data-track="oud" data-src="oud-texture-smyrna.v1.m4a" data-details="work.html#ln-02" data-title="Oud texture (Smyrna)">
           <span class="track__idx">LN&middot;02</span>
           <button class="play" type="button" data-play="oud" aria-label="Play Oud texture (Smyrna)" aria-pressed="false">
             <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
@@ -103,12 +104,12 @@
             <p class="track__desc">An oud passage recorded in the stone interior of the old bathhouse in Smyrna (Izmir), using its natural reverberation. A transient motif refracted through real-time granular fragmentation, short gestures frozen into resonant micro-loops that dissolve back into the chamber. Bendir and finger cymbals underneath.</p>
           </div>
           <details class="track__tech">
-            <summary>Technical dossier</summary>
+            <summary><span>Technical dossier</span></summary>
             <p>oud → granular freeze (Beads) · percussion → multi-tap delay (Magneto) · bells → pitch-shifted reverb (Mimeophon, Clouds) · stereo field rotation via Maths</p>
           </details>
-          <p class="track__meta">Izmir / Smyrna · 2024 · 0:58</p>
+          <p class="track__meta">Izmir / Smyrna · 2024 · 0:59</p>
         </li>
-        <li class="track" data-track="ambiance" data-url="https://soundcloud.com/levant_noir/l-ambiance" data-title="L’ambiance">
+        <li class="track" id="ln-03" data-track="ambiance" data-src="l-ambiance.v1.m4a" data-details="work.html#ln-03" data-title="L’ambiance">
           <span class="track__idx">LN&middot;03</span>
           <button class="play" type="button" data-play="ambiance" aria-label="Play L’ambiance" aria-pressed="false">
             <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
@@ -122,12 +123,12 @@
             <p class="track__desc">Made for the installation <em>Espacio Liminal</em> (Galería Niebelungen, Berlin). Sub-bass foundations, slow-swept narrow band-pass filters, and slowed environmental recordings of glacial thaw, using deliberate voltage drift to mirror the perceptual adaptation of the ear to quiet spaces.</p>
           </div>
           <details class="track__tech">
-            <summary>Technical dossier</summary>
+            <summary><span>Technical dossier</span></summary>
             <p>Plaits (wavetable) · Ripples (band-pass, slow sweep) · Clouds (80% wet) · environmental recordings → Morphagene at half speed</p>
           </details>
           <p class="track__meta">Berlin · 2024 · 3:04</p>
         </li>
-        <li class="track" data-track="candles" data-url="https://soundcloud.com/levant_noir/lean-candles" data-title="Lean candles">
+        <li class="track" id="ln-04" data-track="candles" data-src="lean-candles.v1.m4a" data-details="work.html#ln-04" data-title="Lean candles">
           <span class="track__idx">LN&middot;04</span>
           <button class="play" type="button" data-play="candles" aria-label="Play Lean candles" aria-pressed="false">
             <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
@@ -141,10 +142,10 @@
             <p class="track__desc">Opening theme for an Armenian documentary on political transition. A sample from a beautiful apricot-wood duduk over analogue bass synthesis and mechanical tape degradation. Down-tempo, the lament of the reed held in a modal scale.</p>
           </div>
           <details class="track__tech">
-            <summary>Technical dossier</summary>
+            <summary><span>Technical dossier</span></summary>
             <p>duduk → 3 s granular buffer · TR-8S rhythm architecture · Moog Sub 37 analogue bass · vinyl crackle → tape saturation → dynamic sidechain</p>
           </details>
-          <p class="track__meta">Documentary score · 2022 · 3:06</p>
+          <p class="track__meta">Documentary score · 2022 · 3:05</p>
         </li>
         <li class="track track--pending">
           <span class="track__idx">LN&middot;05</span>
@@ -154,7 +155,7 @@
             <p class="track__desc">Night recordings of two seabird colonies, Manx shearwaters on Rùm and Scopoli's shearwaters on islets off eastern Crete. Nocturnal colony sound, nesting calls from underground, and acoustic instruments, tracing the maritime geography that links two edges of Europe.</p>
           </div>
           <details class="track__tech">
-            <summary>Technical dossier</summary>
+            <summary><span>Technical dossier</span></summary>
             <p>nocturnal field recordings · acoustic instruments · archival voice materials · multi-channel spatial staging</p>
           </details>
           <p class="track__meta">Rùm · Crete · 2026</p>
@@ -236,7 +237,7 @@
           </li>
           <li class="enq">
             <span>Archive &amp; Media</span>
-            <span class="meta"><a href="https://soundcloud.com/levant_noir" rel="me" target="_blank">SoundCloud</a> · <a href="https://instagram.com/levantnoir.music" rel="me" target="_blank">Instagram</a></span>
+            <span class="meta"><a href="work.html">Full catalogue</a> · <a href="https://instagram.com/levantnoir.music" rel="me" target="_blank">Instagram</a></span>
           </li>
           <li class="enq">
             <span>Development Project</span>
@@ -264,11 +265,10 @@
     </button>
     <p class="player__title" id="player-title" aria-live="polite"></p>
     <p class="player__time" id="player-time">0:00</p>
-    <div class="player__progress" aria-hidden="true"><div class="player__bar" id="player-bar"></div></div>
-    <a class="player__link" id="player-link" href="https://soundcloud.com/levant_noir" target="_blank" rel="noopener">SoundCloud</a>
+    <div class="player__progress"><div class="player__bar" id="player-bar"></div><input class="player__seek" id="player-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek" disabled></div>
+    <a class="player__link" id="player-link" href="work.html">Details</a>
     <button class="player__stop" type="button" id="player-stop">Stop</button>
   </div>
-  <div class="sc-host" id="sc-host" aria-hidden="true"></div>
 
   <script src="js/player.js" defer></script>
 </body>

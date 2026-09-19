@@ -1,44 +1,45 @@
 /* Listening room player.
-   One SoundCloud widget, created on the first press of play, drives every play button and the
-   bar at the foot of the page, so playback can be paused or stopped from anywhere.
-   The small SoundCloud API script is fetched when a play button is first hovered or focused
-   (so the press itself can start sound within the browser's gesture window); the player
-   iframe is created only on the press. */
+   One audio element, created on the first press of play, drives every play button and the
+   bar at the foot of the page, so playback can be paused, scrubbed or stopped from anywhere.
+   The recordings are files in audio/, served by this site. Nothing is fetched until a press.
+   To move the recordings to a bucket later, change AUDIO_BASE and nothing else. */
 (function () {
   'use strict';
+
+  var AUDIO_BASE = 'audio/';
 
   var tracks = {};
   document.querySelectorAll('[data-track]').forEach(function (el) {
     tracks[el.getAttribute('data-track')] = {
       el: el,
-      url: el.getAttribute('data-url'),
-      title: el.getAttribute('data-title')
+      src: AUDIO_BASE + el.getAttribute('data-src'),
+      title: el.getAttribute('data-title'),
+      details: el.getAttribute('data-details')
     };
   });
 
   var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-play]'));
+  var videos = Array.prototype.slice.call(document.querySelectorAll('video'));
   var player = document.getElementById('player');
   var toggle = document.getElementById('player-toggle');
   var stopBtn = document.getElementById('player-stop');
   var titleEl = document.getElementById('player-title');
   var timeEl = document.getElementById('player-time');
   var barEl = document.getElementById('player-bar');
+  var seekEl = document.getElementById('player-seek');
   var linkEl = document.getElementById('player-link');
-  var host = document.getElementById('sc-host');
 
-  var widget = null;
-  var apiPromise = null;
+  var audio = null;
   var currentId = null;
   var playing = false;
-  var durationMs = 0;
-  var readyTimer = null;
+  var seeking = false;
 
-  host.inert = true;
-
-  function fmt(ms) {
-    var s = Math.max(0, Math.round(ms / 1000));
+  function fmt(sec) {
+    var s = Math.max(0, Math.round(sec));
     return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
   }
+
+  function isFailed() { return player.classList.contains('is-failed'); }
 
   function setButtons() {
     buttons.forEach(function (b) {
@@ -50,6 +51,7 @@
     });
     player.classList.toggle('is-paused', !playing);
     toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
   }
 
   function setBusy(id, on) {
@@ -59,10 +61,18 @@
     });
   }
 
+  function setProgress(pos, dur) {
+    var ok = isFinite(dur) && dur > 0;
+    timeEl.textContent = fmt(pos) + (ok ? ' / ' + fmt(dur) : '');
+    barEl.style.width = (ok ? Math.min(100, (pos / dur) * 100) : 0) + '%';
+    seekEl.disabled = !ok;
+    if (ok && !seeking) seekEl.value = Math.round((pos / dur) * 1000);
+    seekEl.setAttribute('aria-valuetext', ok ? fmt(pos) + ' of ' + fmt(dur) : '0:00');
+  }
+
   function showBar(t) {
     titleEl.textContent = t.title;
-    linkEl.textContent = 'SoundCloud';
-    linkEl.href = t.url;
+    if (t.details) { linkEl.href = t.details; linkEl.hidden = false; } else { linkEl.hidden = true; }
     player.hidden = false;
     player.classList.remove('is-failed');
     document.body.classList.add('has-player');
@@ -72,163 +82,129 @@
     player.hidden = true;
     player.classList.remove('is-failed');
     document.body.classList.remove('has-player');
-    barEl.style.width = '0%';
-    timeEl.textContent = '0:00';
+    setProgress(0, 0);
   }
 
-  function armReadyTimer() {
-    clearTimeout(readyTimer);
-    readyTimer = setTimeout(function () {
-      if (currentId && !playing) failed(currentId);
-    }, 12000);
-  }
-
-  function loadApi() {
-    if (window.SC && window.SC.Widget) return Promise.resolve();
-    if (apiPromise) return apiPromise;
-    apiPromise = new Promise(function (resolve, reject) {
-      var s = document.createElement('script');
-      s.src = 'https://w.soundcloud.com/player/api.js';
-      s.async = true;
-      var timer = setTimeout(function () { fail(new Error('timeout')); }, 8000);
-      function fail(err) { clearTimeout(timer); apiPromise = null; if (s.parentNode) s.parentNode.removeChild(s); reject(err); }
-      s.onload = function () {
-        clearTimeout(timer);
-        if (window.SC && window.SC.Widget) resolve(); else fail(new Error('no widget api'));
-      };
-      s.onerror = function () { fail(new Error('load')); };
-      document.head.appendChild(s);
+  function setSession(t) {
+    if (!('mediaSession' in navigator) || !window.MediaMetadata) return;
+    navigator.mediaSession.metadata = new window.MediaMetadata({
+      title: t.title,
+      artist: 'Levant Noir',
+      artwork: [{ src: 'images/og.jpg', sizes: '1200x630', type: 'image/jpeg' }]
     });
-    return apiPromise;
   }
 
-  function widgetParams() {
-    return 'auto_play=true&show_artwork=false&show_user=false&show_comments=false&show_playcount=false&buying=false&sharing=false&download=false&hide_related=true&visual=false';
-  }
-
-  function createWidget(firstUrl) {
-    var iframe = document.createElement('iframe');
-    iframe.title = 'SoundCloud player';
-    iframe.allow = 'autoplay';
-    iframe.tabIndex = -1;
-    iframe.src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(firstUrl) + '&' + widgetParams();
-    host.appendChild(iframe);
-    try {
-      widget = window.SC.Widget(iframe);
-    } catch (e) {
-      host.removeChild(iframe);
-      widget = null;
-      return false;
-    }
-    var E = window.SC.Widget.Events;
-    widget.bind(E.READY, function () {
-      clearTimeout(readyTimer);
-      widget.getDuration(function (d) { durationMs = d || 0; });
-      if (currentId && !playing) widget.play();
-    });
-    widget.bind(E.PLAY, function () {
-      clearTimeout(readyTimer);
-      if (!currentId) { widget.pause(); return; }
+  function createAudio() {
+    audio = new Audio();
+    audio.preload = 'auto';
+    audio.addEventListener('playing', function () {
+      if (!currentId) { audio.pause(); return; }
       playing = true;
       setBusy(currentId, false);
       setButtons();
+      videos.forEach(function (v) { v.pause(); });
     });
-    widget.bind(E.PAUSE, function () { playing = false; setButtons(); });
-    widget.bind(E.FINISH, function () {
+    audio.addEventListener('waiting', function () { if (currentId) setBusy(currentId, true); });
+    audio.addEventListener('pause', function () { playing = false; setButtons(); });
+    audio.addEventListener('ended', function () {
       playing = false; setButtons();
-      barEl.style.width = '100%';
+      setProgress(audio.duration, audio.duration);
     });
-    widget.bind(E.ERROR, function () { if (currentId) failed(currentId); });
-    widget.bind(E.PLAY_PROGRESS, function (e) {
-      if (e && typeof e.currentPosition === 'number') {
-        timeEl.textContent = fmt(e.currentPosition) + (durationMs ? ' / ' + fmt(durationMs) : '');
-        if (durationMs) barEl.style.width = Math.min(100, (e.currentPosition / durationMs) * 100) + '%';
-      }
+    audio.addEventListener('error', function () { if (currentId) failed(currentId); });
+    audio.addEventListener('timeupdate', function () { setProgress(audio.currentTime, audio.duration); });
+    audio.addEventListener('durationchange', function () { setProgress(audio.currentTime, audio.duration); });
+
+    if ('mediaSession' in navigator) {
+      var ms = navigator.mediaSession;
+      try {
+        ms.setActionHandler('play', function () { audio.play(); });
+        ms.setActionHandler('pause', function () { audio.pause(); });
+        ms.setActionHandler('stop', stop);
+        ms.setActionHandler('seekto', function (e) { if (typeof e.seekTime === 'number') audio.currentTime = e.seekTime; });
+      } catch (e) {}
+    }
+  }
+
+  function play() {
+    var p = audio.play();
+    if (p && p.catch) p.catch(function (err) {
+      /* a newer press interrupts the pending one; only a real refusal is a failure */
+      if (err && err.name === 'AbortError') return;
+      if (currentId) failed(currentId);
     });
-    return true;
   }
 
   function loadAndPlay(id) {
     var t = tracks[id];
+    if (!audio) createAudio();
     currentId = id;
     playing = false;
-    durationMs = 0;
-    barEl.style.width = '0%';
-    timeEl.textContent = '0:00';
     showBar(t);
+    setProgress(0, 0);
     setButtons();
     setBusy(id, true);
-    armReadyTimer();
-    if (!widget) {
-      if (!createWidget(t.url)) { setBusy(id, false); failed(id); }
-      return;
-    }
-    widget.load(t.url, {
-      auto_play: true, show_artwork: false, show_user: false, show_comments: false,
-      show_playcount: false, buying: false, sharing: false, download: false, hide_related: true,
-      callback: function () { widget.getDuration(function (d) { durationMs = d || 0; }); }
-    });
+    setSession(t);
+    audio.src = t.src;
+    play();
   }
 
   function failed(id) {
     var t = tracks[id];
-    clearTimeout(readyTimer);
     currentId = id; playing = false;
     setBusy(id, false);
     showBar(t);
     player.classList.add('is-failed');
-    titleEl.textContent = t.title + ': the player could not load here.';
-    linkEl.textContent = 'Listen on SoundCloud';
-    linkEl.href = t.url;
+    titleEl.textContent = t.title + ': the recording could not load. Press play to try again.';
     setButtons();
   }
 
   function onPlayPress(id) {
-    var t = tracks[id];
-    if (!t) return;
-    if (widget && currentId === id && !player.classList.contains('is-failed')) {
-      widget.toggle();
+    if (!tracks[id]) return;
+    if (audio && currentId === id && !isFailed()) {
+      if (audio.paused) play(); else audio.pause();
       return;
     }
-    if (window.SC && window.SC.Widget) { loadAndPlay(id); return; }
-    setBusy(id, true);
-    loadApi().then(function () {
-      setBusy(id, false);
-      loadAndPlay(id);
-    }, function () {
-      setBusy(id, false);
-      failed(id);
-    });
+    loadAndPlay(id);
   }
 
-  function warm() { loadApi().then(null, function () {}); }
-
-  buttons.forEach(function (b) {
-    b.addEventListener('click', function () { onPlayPress(b.getAttribute('data-play')); });
-    b.addEventListener('pointerenter', warm, { once: true });
-    b.addEventListener('focus', warm, { once: true });
-    b.addEventListener('touchstart', warm, { once: true, passive: true });
-  });
-
-  toggle.addEventListener('click', function () {
-    if (!currentId) return;
-    if (widget && !player.classList.contains('is-failed')) widget.toggle();
-    else onPlayPress(currentId);
-  });
-
-  stopBtn.addEventListener('click', function () {
+  function stop() {
     var id = currentId;
     currentId = null;
     playing = false;
-    clearTimeout(readyTimer);
-    if (widget) { try { widget.pause(); widget.seekTo(0); } catch (e) {} }
+    if (audio) { audio.pause(); audio.removeAttribute('src'); audio.load(); }
+    if (id) setBusy(id, false);
     setButtons();
     hideBar();
     var back = (id && document.querySelector('.tracks [data-play="' + id + '"]')) || buttons[0];
     if (back) back.focus();
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { onPlayPress(b.getAttribute('data-play')); });
+  });
+
+  toggle.addEventListener('click', function () { if (currentId) onPlayPress(currentId); });
+  stopBtn.addEventListener('click', stop);
+
+  seekEl.addEventListener('input', function () {
+    if (!audio || !isFinite(audio.duration)) return;
+    seeking = true;
+    setProgress((seekEl.value / 1000) * audio.duration, audio.duration);
+  });
+  seekEl.addEventListener('change', function () {
+    if (audio && isFinite(audio.duration)) audio.currentTime = (seekEl.value / 1000) * audio.duration;
+    seeking = false;
+  });
+
+  /* A film and the bar never sound together. */
+  videos.forEach(function (v) {
+    v.addEventListener('play', function () {
+      if (audio && !audio.paused) audio.pause();
+      videos.forEach(function (o) { if (o !== v) o.pause(); });
+    });
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && playing && widget) widget.pause();
+    if (e.key === 'Escape' && playing && audio) audio.pause();
   });
 })();
