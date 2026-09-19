@@ -104,6 +104,8 @@ svg { display: block; }
 .hero__picture, .hero__picture img {
   position: absolute; inset: 0; width: 100%; height: 100%;
 }
+/* The picture box itself is positioned, so without its own z-index it paints over the nav and takes every click. */
+.hero__picture { z-index: -2; pointer-events: none; }
 .hero__picture img { object-fit: cover; object-position: 50% 55%; z-index: -2; }
 .hero::before {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
