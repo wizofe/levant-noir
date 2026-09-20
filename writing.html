@@ -10,14 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=14">
+  <link rel="stylesheet" href="css/site.css?v=15">
   <style>
     .page-writings {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: var(--paper);
-      color: var(--ink);
+      color: var(--ink);   /* no background here: the grained ground comes from body */
     }
     .page-writings__header {
       padding: 28px max(var(--gutter), calc((100% - var(--max-width)) / 2));
@@ -56,10 +55,11 @@
       max-width: 18ch;
     }
     .page-writings__subtitle {
-      font-family: var(--sans);
-      font-size: clamp(16px, 1.4vw, 19px);
-      line-height: 1.6;
-      color: var(--ink-soft);
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      font-variation-settings: 'opsz' 20;
+      color: var(--ink);
       max-width: 58ch;
       margin-top: 24px;
     }
@@ -103,7 +103,7 @@
       font-family: var(--mono);
       font-size: 12px;
       letter-spacing: 0.05em;
-      color: var(--copper);
+      color: var(--muted);   /* a catalogue mark: Rowan is kept for sound and invitation */
       text-transform: uppercase;
     }
     .writing-entry__title {
@@ -114,7 +114,7 @@
     .writing-entry__body {
       font-size: clamp(18px, 1.35vw, 21px);
       line-height: 1.7;
-      color: var(--ink-soft);
+      color: var(--ink);
       font-variation-settings: 'opsz' 20;
     }
     .lineage-card {
@@ -135,10 +135,11 @@
       color: var(--ink);
     }
     .lineage-card__body {
-      font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--ink-soft);
+      font-family: var(--serif);
+      font-size: var(--fs-body-sm);
+      line-height: var(--lh-body-sm);
+      font-variation-settings: 'opsz' 16;
+      color: var(--ink);
     }
     @media (max-width: 899px) {
       .writings-stream, .writings-sidebar {
@@ -161,7 +162,7 @@
 
   <main id="main">
     <div class="page-writings__hero">
-      <p class="label" style="color: var(--copper);">Theory &middot; Acoustics &middot; Memory</p>
+      <p class="label">Theory &middot; Acoustics &middot; Memory</p>
       <h1 class="page-writings__title">Critical miniatures on listening, gesture, and signal decay.</h1>
       <p class="page-writings__subtitle">Texts examining how acoustic materials, tactile frets, and generative algorithms converse at the intersection of Mediterranean and Scottish sonic geographies.</p>
     </div>
@@ -212,7 +213,7 @@
         </div>
 
         <div class="lineage-card" style="background: transparent; border: 1px dashed var(--rule-subtle);">
-          <h3 class="lineage-card__title" style="color: var(--copper);">Location &middot; Fieldwork</h3>
+          <h3 class="lineage-card__title">Location &middot; Fieldwork</h3>
           <p class="lineage-card__body">Field recordings and acoustic captures gathered across Glasgow, the Black Isle (Cromarty Firth), the Isle of Rùm, Nafplion, and the Dionysades islets of eastern Crete.</p>
         </div>
       </aside>
@@ -221,7 +222,7 @@
 
   <footer class="footer" style="margin-top: auto; border-top: 1px solid var(--rule-subtle);">
     <p>Levant Noir &middot; The electroacoustic practice of Ioannis Valasakis.</p>
-    <a href="/" style="text-decoration: underline;">Return to Main Portfolio</a>
+    <a href="/">Return to the main page</a>
   </footer>
 </body>
 </html>

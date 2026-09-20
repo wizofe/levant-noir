@@ -48,13 +48,13 @@ Masters live in `masters/` (git-ignored). Delivery files are made with `tools/en
 
 ## What is left to do
 
-Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the review's third addendum: White Rose on the homepage, lighter play mark, opaque compact bar).
+Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the final review of the night: first sound stand-in, invented synopses removed, catalogue invitation, screen and sound design named in the hero and metadata, writing and Wudd pages aligned).
 
 Waiting on Ioannis:
 
-- Master for "Blackbirds and a lavta" (LN·01, also "Listen first"). Until `audio/blackbirds-and-a-lavta.v1.m4a` exists its play button reports that the recording could not load. Encode with `tools/encode-audio.sh`. Last resort is the lossy SoundCloud stream.
+- Master for "Blackbirds and a lavta" (LN·01). "Listen first" on the homepage points at Oud texture as a stand-in so the first sound works; when the master arrives, restore it: `data-play="blackbirds"`, title "Blackbirds and a lavta", voice line "Start here: two minutes, a lavta and the birds outside.", meta "A Cretan kontyliá at a Glasgow window" with "June 2025 · 2:06". Until `audio/blackbirds-and-a-lavta.v1.m4a` exists its play button reports that the recording could not load. Encode with `tools/encode-audio.sh`. Last resort is the lossy SoundCloud stream.
 - His own brush stroke, inked and scanned, to trace into `.hand-rule` in `css/site.css` (the current path is the reviewer's placeholder).
-- Real synopses for the two reel cues (SC·04); the current stories are invented placeholders. Confirm the "distorted bass" in EX·03 and the three EX titles (Limestone aksak, The piano turns, Voice in grains).
+- Real credits for the screen series: film titles, directors and years for the two reel cues (SC·04, whose invented synopses were removed on 20 September 2026) and for Lean candles (LN·04, an un-named documentary). Never invent synopses or credits. Confirm the "distorted bass" in EX·03 and the three EX titles (Limestone aksak, The piano turns, Voice in grains).
 - One photograph of the instrument or the person for About (review #26).
 - The brand of the Czech stereo microphone used on Gothenburg port soundscape (LN·05); the dossier currently says "stereo microphone pair". Add the name when he remembers it.
 - Bio checks: optionally the names of his makam and dastgah teachers at Labyrinth (the convention among Labyrinth musicians is "studied X with [name]"); whether his PhD concerned memory, which would let the bio link the science to the archive work directly.
@@ -68,10 +68,16 @@ Waiting on Teine Studio:
 
 To build later (placeholders in place):
 
+- Live section facts as plain text: the set's duration (two versions if they exist), what he brings, what the room must provide. Needs his facts (final review, item 5).
+
 - Bookers' one-page PDF for Between Two Shores (description, two durations, ensemble options, rider table, stage plan) at `press/between-two-shores.pdf`, and a press kit (60-word and 200-word third-person bios, two photographs, logotype) at `press/levant-noir-press-kit.zip` (review #25, #27). The Live section currently says both are available on request; replace that sentence with links, and add a "For bookers" row to Enquiries. Needs the set's duration and technical requirements from Ioannis.
+
 - Podcast and radio category in the catalogue, once he supplies the work (excerpts cleared with clients).
+
 - In `work.html`, the meta line of Lean candles still reads "Documentary score · 2022"; the review wants a place there, city unknown.
+
 - Move `audio/` and `video/` to a bucket (Cloudflare R2) when the archive outgrows the repo; only `AUDIO_BASE` in `js/player.js` and the video paths change.
+
 - Recreate the `git pushw` alias on this machine (see below); pushes currently use the equivalent one-off HTTPS command.
 
 ## Film rights

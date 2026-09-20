@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=14">
+  <link rel="stylesheet" href="css/site.css?v=15">
   <style>
     .page-work { min-height: 100vh; display: flex; flex-direction: column; }
     /* The header keeps its full-width rule; its contents align with the box below. */
@@ -28,6 +28,9 @@
       display: inline-flex; align-items: center; gap: 8px; transition: color 0.25s ease;
     }
     .page-work__back:hover { color: var(--rowan); }
+    .page-work__aside { display: flex; align-items: baseline; gap: 28px; }
+    .page-work__contact { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 0; margin: -6px 0; text-decoration: underline; text-decoration-color: var(--rowan); text-underline-offset: 5px; }
+    .page-work__invite { margin-top: clamp(56px, 7vw, 96px); padding-top: 28px; border-top: 1px solid var(--rule-subtle); }
     .page-work__hero {
       padding: clamp(56px, 8vw, 104px) var(--gutter) clamp(32px, 4vw, 48px);
       max-width: var(--page); margin: 0 auto; width: 100%;
@@ -82,6 +85,7 @@
     .track__side .track__meta { padding-top: 0; }
 
     @media (max-width: 899px) {
+      .page-work__aside .label { display: none; }
       .tracks--cat { grid-template-columns: 44px 44px minmax(0, 1fr); }
       .track--cat .track__meta { grid-column: 3; }
       /* On a phone the film takes the full row, back across the number and play columns. */
@@ -107,7 +111,7 @@
         <span>Levant Noir</span>
       </a>
     </nav>
-    <span class="label" style="letter-spacing: 0.14em;">Archive &middot; Catalogue</span>
+    <p class="page-work__aside"><span class="label" style="letter-spacing: 0.14em;">Archive &middot; Catalogue</span><a class="page-work__contact" href="index.html#contact">Contact</a></p>
   </header>
 
   <main id="main">
@@ -353,7 +357,7 @@
               <p class="track__role">Screen reel &middot; Japanese instrumentation, Javanese gamelan</p>
               <details class="track__tech track__notes">
                 <summary><span class="when-closed">Read the notes</span><span class="when-open">Close the notes</span></summary>
-                <p class="track__desc">Two cues from my screen reel, each written for a short film. The first follows a lighthouse keeper’s daughter on the Sea of Japan coast, recording the foghorn in the week before it is switched off. The second is a night ferry crossing out of Java: a boy is carrying his grandfather’s gong to be retuned, and the cue is built on gamelan.</p>
+                <p class="track__desc">Two cues from my screen reel, each written for a short film: one in a Japanese idiom, one built on Javanese gamelan.</p>
               </details>
             </div>
             <p class="track__meta">Reel &middot; 2024 &middot; 2:08</p>
@@ -428,6 +432,8 @@
           </li>
         </ol>
       </section>
+
+      <p class="body page-work__invite">To commission a score or sound design, write to <a href="mailto:hello@levantnoir.scot?subject=Commission%3A%20Levant%20Noir">hello@levantnoir.scot</a>.</p>
     </div>
   </main>
 
