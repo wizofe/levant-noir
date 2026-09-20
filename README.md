@@ -11,7 +11,7 @@ index.html          the main portfolio: hero, statement, listening room, perform
 work.html           the full catalogue: every recording, score and sketch as a playable row, filterable, deep-linkable
 writing.html        dedicated reading page for critical miniatures, acoustic philosophy and lineage
 wudd.html           standalone project page for Wudd (sound and breath practice)
-brand.html          studio brand identity & material specification by Teine Studio (Eilidh Morrison)
+brand.html          studio brand identity & material specification by Teine Studio (Eilidh Morrison); kept in the repo only, excluded from the site by .vercelignore
 css/site.css        design tokens and layout (GSA tactility, Tokyo/Seoul spaciousness, London improv energy)
 js/player.js        the player: one audio element created on first play, persistent bar with seeking
 audio/              delivery files, AAC in .m4a, versioned names (slug.v1.m4a)

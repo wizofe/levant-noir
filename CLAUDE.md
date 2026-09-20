@@ -2,7 +2,7 @@
 
 Static personal site for Ioannis Valasakis (Levant Noir): electroacoustic composer and multi-instrumentalist. No build step. Plain HTML, one shared `css/site.css`, small JS player. All audio and video is self-hosted (`audio/`, `video/`); there is no SoundCloud or other third-party player, and none should be reintroduced.
 
-Pages: `index.html` (main), `work.html` (full catalogue of recordings, scores and sketches), `writing.html` (critical texts), `brand.html` (Teine Studio identity dossier), `wudd.html` (sound/breath project).
+Pages: `index.html` (main), `work.html` (full catalogue of recordings, scores and sketches), `writing.html` (critical texts), `wudd.html` (sound/breath project). `brand.html` (Teine Studio identity dossier) stays in the repo as reference but is not part of the website: `.vercelignore` keeps it out of the deploy and nothing links to it. Do not link or publish it.
 
 ## Visual identity
 
