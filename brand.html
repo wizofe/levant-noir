@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=5">
+  <link rel="stylesheet" href="css/site.css?v=9">
   <style>
     .page-brand {
       min-height: 100vh;
@@ -283,15 +283,18 @@
   </style>
 </head>
 <body class="page-brand">
+  <a class="skip" href="#main">Skip to content</a>
   <header class="brand-header">
-    <a class="brand-back" href="index.html#contact">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      <span>Levant Noir</span>
-    </a>
+    <nav aria-label="Back">
+      <a class="brand-back" href="index.html">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Levant Noir</span>
+      </a>
+    </nav>
     <span class="label">Teine Studio · Rev. C Warm</span>
   </header>
 
-  <main>
+  <main id="main">
     <div class="brand-hero">
       <p class="label" style="color: var(--rowan);">Brand Identity · Rev. C · Warm · September 2026</p>
       <h1 class="brand-hero__title">Identity system for Levant Noir</h1>

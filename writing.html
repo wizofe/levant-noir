@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=5">
+  <link rel="stylesheet" href="css/site.css?v=9">
   <style>
     .page-writings {
       min-height: 100vh;
@@ -20,7 +20,7 @@
       color: var(--ink);
     }
     .page-writings__header {
-      padding: 28px var(--gutter);
+      padding: 28px max(var(--gutter), calc((100% - var(--max-width)) / 2));
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -43,7 +43,7 @@
     }
     .page-writings__hero {
       padding: clamp(64px, 9vw, 112px) var(--gutter) clamp(40px, 5vw, 64px);
-      max-width: var(--max-width);
+      max-width: var(--page);
       margin: 0 auto;
       width: 100%;
     }
@@ -64,7 +64,7 @@
       margin-top: 24px;
     }
     .page-writings__content {
-      max-width: var(--max-width);
+      max-width: var(--page);
       margin: 0 auto;
       width: 100%;
       padding: 0 var(--gutter) clamp(80px, 10vw, 140px);
@@ -148,15 +148,18 @@
   </style>
 </head>
 <body class="page-writings">
+  <a class="skip" href="#main">Skip to content</a>
   <header class="page-writings__header">
-    <a class="page-writings__nav-back" href="index.html#writing">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      <span>Levant Noir</span>
-    </a>
+    <nav aria-label="Back">
+      <a class="page-writings__nav-back" href="index.html#writing">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Levant Noir</span>
+      </a>
+    </nav>
     <span class="label" style="letter-spacing: 0.14em;">Archive &middot; Critical Texts</span>
   </header>
 
-  <main>
+  <main id="main">
     <div class="page-writings__hero">
       <p class="label" style="color: var(--copper);">Theory &middot; Acoustics &middot; Memory</p>
       <h1 class="page-writings__title">Critical miniatures on listening, gesture, and signal decay.</h1>

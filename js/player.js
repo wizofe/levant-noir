@@ -34,6 +34,15 @@
   var playing = false;
   var seeking = false;
 
+  /* Compact bar: shown only once the hero has left the viewport (homepage only). */
+  var topbar = document.querySelector('.topbar');
+  var hero = document.querySelector('.hero');
+  if (topbar && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      topbar.hidden = entries[0].isIntersecting;
+    }, { rootMargin: '-40px 0px 0px 0px' }).observe(hero);
+  }
+
   function fmt(sec) {
     var s = Math.max(0, Math.round(sec));
     return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
@@ -50,7 +59,7 @@
       tracks[id].el.classList.toggle('is-playing', id === currentId && playing);
     });
     player.classList.toggle('is-paused', !playing);
-    toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    toggle.setAttribute('aria-label', (playing ? 'Pause' : 'Play') + (currentId ? ' ' + tracks[currentId].title : ''));
     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
   }
 

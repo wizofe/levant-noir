@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,11 +14,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=8">
+  <link rel="stylesheet" href="css/site.css?v=9">
   <style>
     .page-work { min-height: 100vh; display: flex; flex-direction: column; }
+    /* The header keeps its full-width rule; its contents align with the box below. */
     .page-work__header {
-      padding: 28px var(--gutter);
+      padding: 28px max(var(--gutter), calc((100% - var(--max-width)) / 2));
       display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
       border-bottom: 1px solid var(--rule-subtle);
     }
@@ -29,18 +30,18 @@
     .page-work__back:hover { color: var(--rowan); }
     .page-work__hero {
       padding: clamp(56px, 8vw, 104px) var(--gutter) clamp(32px, 4vw, 48px);
-      max-width: var(--max-width); margin: 0 auto; width: 100%;
+      max-width: var(--page); margin: 0 auto; width: 100%;
     }
     .page-work__title {
       font-size: clamp(40px, 5.5vw, 76px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
       margin-top: 16px; max-width: 18ch;
     }
     .page-work__subtitle {
-      font-family: var(--sans); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6;
-      color: var(--ink-soft); max-width: 58ch; margin-top: 24px;
+      font-family: var(--serif); font-size: var(--fs-body); line-height: var(--lh-body); font-variation-settings: 'opsz' 20;
+      color: var(--ink); max-width: 58ch; margin-top: 24px;
     }
     .page-work__content {
-      max-width: var(--max-width); margin: 0 auto; width: 100%;
+      max-width: var(--page); margin: 0 auto; width: 100%;
       padding: 0 var(--gutter) clamp(64px, 8vw, 112px);
     }
 
@@ -58,18 +59,21 @@
     .cat { margin-top: clamp(40px, 5vw, 64px); }
     .cat[hidden] { display: none; }
     .cat__head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-bottom: 14px; }
-    .cat__code { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: var(--rowan); }
+    .cat__code { font-family: var(--mono); font-size: var(--fs-mono); font-weight: 700; letter-spacing: 0.14em; color: var(--muted); }
     .cat__title { font-size: 26px; font-variation-settings: 'opsz' 26; }
-    .cat__note { font-family: var(--sans); font-size: 13.5px; color: var(--muted); }
+    .cat__note { font-family: var(--serif); font-style: italic; font-size: var(--fs-caption); font-variation-settings: 'opsz' 14; color: var(--ink-soft); }
 
     /* Catalogue rows: number, play, title and role, measurement. The rest waits inside the notes. */
     .tracks--cat { grid-column: auto; }
     .track--cat { grid-template-columns: 52px 44px minmax(0, 1fr) auto; scroll-margin-top: 24px; }
     .track--cat:target { background: var(--panel); box-shadow: -12px 0 0 var(--panel), 12px 0 0 var(--panel); }
-    .track__role { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
-    .track__notes .track__desc { font-size: 14.5px; line-height: 1.6; max-width: 62ch; margin-top: 10px; }
-    .track__notes .track__dossier { margin-top: 10px; max-width: 62ch; }
-    .track__film { display: block; width: 100%; max-width: 720px; height: auto; margin-top: 16px; background: var(--panel); }
+    .track__role { font-family: var(--serif); font-size: var(--fs-body-sm); line-height: 1.45; font-variation-settings: 'opsz' 16; color: var(--ink-soft); }
+    .track__notes .track__desc { margin-top: 12px; }
+    .track__notes .track__dossier { margin-top: 10px; max-width: var(--measure-sm); }
+    .track__film { display: block; width: 100%; max-width: 960px; height: auto; margin-top: 16px; background: var(--panel); }
+    /* An open film takes the columns its still has vacated, so the row does not sit lopsided. */
+    .track--film:has(details[open]) .track__body { grid-column: 3 / -1; }
+    .track--film:has(details[open]) .track__side { grid-column: 3 / -1; align-items: flex-start; }
 
     /* Film entries show a still in the row, so the picture is never a surprise behind a button.
        Pressing it opens the entry and starts the film; once open, the film itself replaces the still. */
@@ -95,7 +99,7 @@
       .track__film { width: calc(100% + 116px); max-width: none; margin-left: -116px; }
       .track__side { grid-column: 1 / -1; align-items: stretch; }
       .track__thumb { width: 100%; }
-      .track__side .track__meta { padding-left: 116px; }
+      .track__side .track__meta { padding-left: 0; }
     }
     @media print {
       .filters, .track__film, .track__thumb { display: none; }
@@ -107,16 +111,18 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="page-work__header">
-    <a class="page-work__back" href="index.html#listen">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      <span>Levant Noir</span>
-    </a>
+    <nav aria-label="Back">
+      <a class="page-work__back" href="index.html#listen">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Levant Noir</span>
+      </a>
+    </nav>
     <span class="label" style="letter-spacing: 0.14em;">Archive &middot; Catalogue</span>
   </header>
 
   <main id="main">
     <div class="page-work__hero">
-      <p class="label" style="color: var(--rowan);">Recordings &middot; Scores &middot; Sketches</p>
+      <p class="label">Recordings &middot; Scores &middot; Sketches</p>
       <h1 class="page-work__title">Catalogue of work.</h1>
       <p class="page-work__subtitle">Compositions and installation sound, music written to picture with three of the films, and a set of rhythm studies. Everything plays from this page, and the notes under each entry hold the context.</p>
     </div>
@@ -183,13 +189,13 @@
             </button>
             <div class="track__body">
               <h3 class="track__title">
-                <span>L’ambiance</span>
+                <span lang="fr">L’ambiance</span>
                 <span class="track-wave" aria-hidden="true"><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span></span>
               </h3>
-              <p class="track__role">Installation sound &middot; <em>Espacio Liminal</em>, Galería Niebelungen</p>
+              <p class="track__role">Installation sound &middot; <em lang="es">Espacio Liminal</em>, Galería Niebelungen</p>
               <details class="track__tech track__notes">
                 <summary><span class="when-closed">Notes and technical dossier</span><span class="when-open">Close the notes</span></summary>
-                <p class="track__desc">Made for the installation <em>Espacio Liminal</em> (Galería Niebelungen, Berlin). Sub-bass foundations, slow-swept narrow band-pass filters, and slowed environmental recordings of glacial thaw, using deliberate voltage drift to mirror the perceptual adaptation of the ear to quiet spaces.</p>
+                <p class="track__desc">Made for the installation <em lang="es">Espacio Liminal</em> (Galería Niebelungen, Berlin). Sub-bass foundations, slow-swept narrow band-pass filters, and slowed environmental recordings of glacial thaw, using deliberate voltage drift to mirror the perceptual adaptation of the ear to quiet spaces.</p>
                 <p class="track__dossier">Plaits (wavetable) &middot; Ripples (band-pass, slow sweep) &middot; Clouds (80% wet) &middot; environmental recordings → Morphagene at half speed</p>
               </details>
             </div>
@@ -450,7 +456,7 @@
     <button class="player__stop" type="button" id="player-stop">Stop</button>
   </div>
 
-  <script src="js/player.js" defer></script>
+  <script src="js/player.js?v=2" defer></script>
   <script>
     /* Filters, and deep links: work.html#sc-01 opens that entry's notes. */
     (function () {
