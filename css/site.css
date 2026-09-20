@@ -16,6 +16,7 @@
   --sea-pink:   #c86a73; /* edge staining, edition numbers; never carries text */
   --heather:    #6e5670; /* the one cool note */
   --warehouse:  #2c4a42; /* the only permitted dark field (chrome / print) */
+  --lichen:     #5c6b4f; /* lichen on stone: hairlines on pending or archival items only, never text (added on the 2026 review's advice; provenance line still owed by Teine Studio) */
   --rule:        rgba(28, 26, 29, 0.14);
   --rule-subtle: rgba(28, 26, 29, 0.10);
 
@@ -245,7 +246,7 @@ svg { display: block; }
 .play[aria-pressed="true"] { border-color: var(--rowan); color: var(--rowan); }   /* whatever is sounding wears the Rowan */
 .play--accent { width: 52px; height: 52px; background: var(--rust); border-color: var(--rust); color: var(--paper); }
 .play--accent:hover { background: var(--rust-deep); border-color: var(--rust-deep); color: var(--paper); }
-.play--pending { border-style: dashed; border-color: rgba(28, 26, 29, 0.32); cursor: default; }
+.play--pending { border-style: dashed; border-color: var(--lichen); cursor: default; }
 
 /* Listening room */
 /* One grid for the whole list; each row borrows its columns (subgrid), so the number, the ring, the

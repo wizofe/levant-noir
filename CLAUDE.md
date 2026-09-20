@@ -6,7 +6,7 @@ Pages: `index.html` (main), `work.html` (full catalogue of recordings, scores an
 
 ## Visual identity
 
-Follows the Teine Studio "Rev. C Warm" system. All colour is tokenised in `css/site.css` `:root`: Lime Wash `#F8F8F7` ground, Rowan `#A9382A` as the accent voice, Sea Pink for edges only, Warehouse Green as the sole dark field. Banned: any brown/ochre/copper/sand/amber, cream grounds, dark screen grounds, decorative gradients. Type: Newsreader (reading + display), Space Grotesk (structure/labels), Space Mono (measurement). Old token names (`--rust`, `--copper`, `--paper`) are kept as aliases so sub-pages inherit the system.
+Follows the Teine Studio "Rev. C Warm" system. All colour is tokenised in `css/site.css` `:root`: Lime Wash `#F8F8F7` ground, Rowan `#A9382A` as the accent voice, Sea Pink for edges only, Warehouse Green as the sole dark field, Lichen `#5C6B4F` for hairlines on pending or archival items only (never text, never fills). Banned: any brown/ochre/copper/sand/amber, cream grounds, dark screen grounds, decorative gradients. Type: Newsreader (reading + display), Space Grotesk (structure/labels), Space Mono (measurement). Old token names (`--rust`, `--copper`, `--paper`) are kept as aliases so sub-pages inherit the system.
 
 Rules adopted from the September 2026 design review:
 
@@ -51,10 +51,10 @@ Masters live in `masters/` (git-ignored). Delivery files are made with `tools/en
 Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the softened marks, the homepage selection of four and the rewritten bio).
 
 Waiting on Ioannis:
+
 - Master for "Blackbirds and a lavta" (LN·01, also "Listen first"). Until `audio/blackbirds-and-a-lavta.v1.m4a` exists its play button reports that the recording could not load. Encode with `tools/encode-audio.sh`. Last resort is the lossy SoundCloud stream.
 - His own brush stroke, inked and scanned, to trace into `.hand-rule` in `css/site.css` (the current path is the reviewer's placeholder).
 - Real synopses for the two reel cues (SC·04); the current stories are invented placeholders. Confirm the "distorted bass" in EX·03 and the three EX titles (Limestone aksak, The piano turns, Voice in grains).
-- Confirmation that the three Guildhall films may be published; if not, remove the `<video>` blocks and stills in `work.html` (rows still work as audio).
 - One photograph of the instrument or the person for About (review #26).
 - The brand of the Czech stereo microphone used on Gothenburg port soundscape (LN·05); the dossier currently says "stereo microphone pair". Add the name when he remembers it.
 - Bio checks: optionally the names of his makam and dastgah teachers at Labyrinth (the convention among Labyrinth musicians is "studied X with [name]"); whether his PhD concerned memory, which would let the bio link the science to the archive work directly.
@@ -63,14 +63,20 @@ Waiting on Ioannis:
 - Once the hand rule is his own stroke: optionally draw the six marks (play, pause, plus, cross, two arrows) with the same pen and use them as masks, replacing the one-stroke SVG set.
 
 Waiting on Teine Studio:
-- Whether lichen `#5c6b4f` may join the Found Palette with a provenance line (review #15, #30). Until then the pending-track circle uses a 32% ink hairline; if approved, add `--lichen` and use it for `.play--pending` only.
+
+- A provenance line for lichen `#5c6b4f` in the Found Palette (review #30). Ioannis approved using it on 20 September 2026 on the reviewer's recommendation; it is in `:root` as `--lichen` and used only on the pending-track circle. The studio's document (`brand.html`, repo only) does not list it yet.
 
 To build later (placeholders in place):
+
 - Bookers' one-page PDF for Between Two Shores (description, two durations, ensemble options, rider table, stage plan) at `press/between-two-shores.pdf`, and a press kit (60-word and 200-word third-person bios, two photographs, logotype) at `press/levant-noir-press-kit.zip` (review #25, #27). The Live section currently says both are available on request; replace that sentence with links, and add a "For bookers" row to Enquiries. Needs the set's duration and technical requirements from Ioannis.
 - Podcast and radio category in the catalogue, once he supplies the work (excerpts cleared with clients).
 - In `work.html`, the meta line of Lean candles still reads "Documentary score · 2022"; the review wants a place there, city unknown.
 - Move `audio/` and `video/` to a bucket (Cloudflare R2) when the archive outgrows the repo; only `AUDIO_BASE` in `js/player.js` and the video paths change.
 - Recreate the `git pushw` alias on this machine (see below); pushes currently use the equivalent one-off HTTPS command.
+
+## Film rights
+
+The three Guildhall films (White Rose, The Boxer, Waves) are cleared for display on this website only, copyright reserved (confirmed by Ioannis, 20 September 2026). Never upload them, or clips of them, anywhere else (YouTube, Vimeo, social posts, press kits), keep `controlslist="nodownload"` on the `<video>` elements, and keep the rights sentence under the "Music for screen" heading in `work.html`.
 
 ## Pushing (requirement)
 
