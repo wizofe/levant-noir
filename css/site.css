@@ -139,7 +139,7 @@ svg { display: block; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 45; height: 40px;
   padding: 0 max(var(--gutter), calc((100% - var(--max-width)) / 2));
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  background: rgba(248, 248, 247, 0.96); border-bottom: 1px solid var(--rule-subtle);
+  background: var(--limewash); border-bottom: 1px solid var(--rule-subtle);
   font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .topbar[hidden] { display: none; }
@@ -232,9 +232,10 @@ svg { display: block; }
 /* One hand for every mark: round caps and joins on a 24-unit grid. The play triangle is
    filled but rounded by a stroke of its own colour, and nudged to its optical centre. */
 .play svg, .player__toggle svg, .track__thumb-ring svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.play .icon-play, .player__toggle .icon-play, .track__thumb-ring svg { fill: currentColor; stroke-width: 5; margin-left: 2px; }
+.play .icon-play, .player__toggle .icon-play, .track__thumb-ring svg { fill: currentColor; stroke-width: 4; margin-left: 2px; }
+.play--accent .icon-play { stroke-width: 5; }
 /* Sizes are set here, not on the svg elements: the triangle is small on its grid and rounded by a heavy stroke, like a worn pebble. */
-.play svg { width: 19px; height: 19px; }
+.play svg { width: 20px; height: 20px; }
 .play--accent svg { width: 23px; height: 23px; }
 .player__toggle svg { width: 17px; height: 17px; }
 .track__thumb-ring svg { width: 11px; height: 11px; margin-left: 1px; }
@@ -312,6 +313,20 @@ svg { display: block; }
 /* The measurement always takes the last column, so a row without a dossier keeps its shape. */
 .track__meta { grid-column: -2; font-family: var(--mono); font-size: var(--fs-mono); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; padding-top: 8px; white-space: nowrap; }
 .track.is-playing .track__title { color: var(--rust); }
+
+/* Film still: a picture in the row that leads to the film. A button in the catalogue (opens and plays the
+   film in place), a link on the homepage (goes to the catalogue entry). */
+.track__thumb { display: block; width: clamp(200px, 19vw, 264px); padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; text-align: left; font: inherit; }
+.track__thumb img { display: block; width: 100%; height: auto; background: var(--panel); transition: opacity 0.25s ease; outline: 1px solid var(--rule-subtle); outline-offset: -1px; }
+.track__thumb:hover img { opacity: 0.86; }
+.track__thumb-cap { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.01em; }
+.track__thumb-ring { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.25px solid var(--ink-soft); color: var(--ink-soft); display: grid; place-items: center; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.track__thumb-label { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(28, 26, 29, 0.3); }
+.track__thumb-dur { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); }
+.track__thumb:hover { color: var(--rowan-deep); }
+.track__thumb:hover .track__thumb-ring { background: var(--rowan); border-color: var(--rowan); color: var(--limewash); }
+.track__thumb:hover .track__thumb-label { text-decoration-color: currentColor; }
+.track > a.track__thumb { width: 100%; max-width: 264px; margin-top: 6px; }   /* fits the dossier column */
 
 /* Performance */
 .figure { grid-column: 1 / span 4; margin: 0; position: relative; }
@@ -495,7 +510,8 @@ svg { display: block; }
   .tracks { grid-template-columns: 44px 44px minmax(0, 1fr); column-gap: 14px; }
   .track { row-gap: 12px; }
   .track__desc { grid-column: 3; }
-  .track__method, .track__tech { grid-column: 3; padding-top: 0; }
+  .track__method, .track__tech, .track > .track__thumb { grid-column: 3; padding-top: 0; }
+  .track > a.track__thumb { max-width: none; margin-top: 0; }
   .track__meta { grid-column: 3; text-align: left; padding-top: 0; white-space: normal; }
   .figure img { width: auto; max-width: 100%; max-height: 480px; }
   .contact__content { width: 100%; min-width: 0; }
@@ -531,7 +547,7 @@ svg { display: block; }
 
 @media print {
   .hero { height: auto; color: var(--ink); padding: 0 0 24px; }
-  .hero__picture, .hero::before, .hero::after, .player, .topbar, .skip, .play { display: none; }
+  .hero__picture, .hero::before, .hero::after, .player, .topbar, .skip, .play, .track__thumb { display: none; }
   .hero__nav { display: none; }
   .sec, .wudd { display: block; margin-top: 32px; padding: 0; }
   .wudd { background: transparent; color: var(--ink); }

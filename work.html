@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=13">
+  <link rel="stylesheet" href="css/site.css?v=14">
   <style>
     .page-work { min-height: 100vh; display: flex; flex-direction: column; }
     /* The header keeps its full-width rule; its contents align with the box below. */
@@ -78,16 +78,6 @@
     /* Film entries show a still in the row, so the picture is never a surprise behind a button.
        Pressing it opens the entry and starts the film; once open, the film itself replaces the still. */
     .track__side { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-    .track__thumb { display: block; width: clamp(200px, 19vw, 264px); padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; text-align: left; font: inherit; }
-    .track__thumb img { display: block; width: 100%; height: auto; background: var(--panel); transition: opacity 0.25s ease; outline: 1px solid var(--rule-subtle); outline-offset: -1px; }
-    .track__thumb:hover img { opacity: 0.86; }
-    .track__thumb-cap { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.01em; }
-    .track__thumb-ring { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.25px solid var(--ink-soft); color: var(--ink-soft); display: grid; place-items: center; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
-    .track__thumb-label { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(28, 26, 29, 0.3); }
-    .track__thumb-dur { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); }
-    .track__thumb:hover { color: var(--rowan-deep); }
-    .track__thumb:hover .track__thumb-ring { background: var(--rowan); border-color: var(--rowan); color: var(--limewash); }
-    .track__thumb:hover .track__thumb-label { text-decoration-color: currentColor; }
     .track--film:has(details[open]) .track__thumb { display: none; }
     .track__side .track__meta { padding-top: 0; }
 

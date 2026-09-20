@@ -40,7 +40,7 @@ Seeking in the player needs HTTP Range support, which `http.server` lacks. When 
 
 ## Homepage selection
 
-The homepage listening room is a selection of four, each with a one or two line description (the full text lives in the catalogue), in this order: LN·01 Blackbirds and a lavta, LN·02 Oud texture (Smyrna), LN·05 Gothenburg port soundscape, EX·03 Voice in grains. Everything else (L’ambiance, Lean candles, The shearwaters, all screen work, the other studies) lives only in `work.html`. Rows keep their catalogue numbers, so gaps on the homepage are expected.
+The homepage listening room is a selection of four, each with a one or two line description (the full text lives in the catalogue), in this order: LN·01 Blackbirds and a lavta, LN·02 Oud texture (Smyrna), LN·05 Gothenburg port soundscape, SC·01 White Rose. White Rose took the place of EX·03 Voice in grains on the reviewer's advice (third addendum, T1), so that one piece of screen work is on the page a producer lands on; its row carries a still that links to the film in the catalogue. Everything else (L’ambiance, Lean candles, The shearwaters, the other screen work, all the studies) lives only in `work.html`. Rows keep their catalogue numbers, so gaps on the homepage are expected.
 
 ## Media
 
@@ -48,7 +48,7 @@ Masters live in `masters/` (git-ignored). Delivery files are made with `tools/en
 
 ## What is left to do
 
-Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the softened marks, the homepage selection of four and the rewritten bio).
+Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the review's third addendum: White Rose on the homepage, lighter play mark, opaque compact bar).
 
 Waiting on Ioannis:
 
