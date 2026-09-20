@@ -103,7 +103,8 @@ svg { display: block; }
 }
 
 .label {
-  font-family: var(--sans); font-size: var(--fs-label); font-weight: 700;
+  /* 500, not the brand page's 700: at 13px on the grained ground the bold read as shouting. */
+  font-family: var(--sans); font-size: var(--fs-label); font-weight: 500;
   letter-spacing: var(--track-label); text-transform: uppercase; color: var(--muted);
 }
 /* Captions speak in the serif italic; any date or duration inside one stays in mono (.tabular). */
@@ -111,7 +112,7 @@ svg { display: block; }
   font-family: var(--serif); font-style: italic; font-size: var(--fs-caption); line-height: var(--lh-caption);
   color: var(--ink-soft); font-variation-settings: 'opsz' 14;
 }
-.meta .tabular { font-family: var(--mono); font-style: normal; font-size: 0.75rem; letter-spacing: 0.04em; }
+.meta .tabular { font-family: var(--mono); font-style: normal; font-size: 0.6875rem; letter-spacing: 0.02em; white-space: nowrap; }
 .meta a { text-decoration: underline; text-underline-offset: 3px; }
 .body {
   font-family: var(--serif); font-weight: 400; font-size: var(--fs-body); line-height: var(--lh-body);
@@ -137,7 +138,7 @@ svg { display: block; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 45; height: 40px;
   padding: 0 max(var(--gutter), calc((100% - var(--max-width)) / 2));
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  background: rgba(248, 248, 247, 0.92); border-bottom: 1px solid var(--rule-subtle);
+  background: rgba(248, 248, 247, 0.96); border-bottom: 1px solid var(--rule-subtle);
   font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .topbar[hidden] { display: none; }
@@ -218,27 +219,43 @@ svg { display: block; }
 .first { grid-column: 9 / span 4; display: flex; flex-direction: column; gap: 14px; padding-top: 10px; }
 .first__row { display: flex; align-items: center; gap: 14px; }
 .first__title { font-size: var(--fs-subhead); line-height: 1.1; }
+.first .meta .tabular { display: block; }
 .first__voice { font-family: var(--serif); font-style: italic; font-size: 1.0625rem; line-height: 1.45; color: var(--ink); }
 
 .play {
   width: 44px; height: 44px; flex: none; border-radius: 50%;
-  border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  border: 1.25px solid var(--ink); background: transparent; color: var(--ink);
   display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;
   transition: all 0.25s ease;
 }
-.play svg { fill: currentColor; }
+/* One hand for every mark: round caps and joins on a 24-unit grid. The play triangle is
+   filled but rounded by a stroke of its own colour, and nudged to its optical centre. */
+.play svg, .player__toggle svg, .track__thumb-ring svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.play .icon-play, .player__toggle .icon-play, .track__thumb-ring svg { fill: currentColor; stroke-width: 5; margin-left: 2px; }
+/* Sizes are set here, not on the svg elements: the triangle is small on its grid and rounded by a heavy stroke, like a worn pebble. */
+.play svg { width: 19px; height: 19px; }
+.play--accent svg { width: 23px; height: 23px; }
+.player__toggle svg { width: 17px; height: 17px; }
+.track__thumb-ring svg { width: 11px; height: 11px; margin-left: 1px; }
+.chamber__btn svg, .page-work__back svg, .page-writings__nav-back svg, .button svg { width: 14px; height: 14px; stroke-width: 1.5; }
 .play .icon-pause { display: none; }
 .play[aria-pressed="true"] .icon-play { display: none; }
 .play[aria-pressed="true"] .icon-pause { display: block; }
 .play:hover { border-color: var(--rust); color: var(--rust); transform: scale(1.05); }
+.play[aria-pressed="true"] { border-color: var(--rowan); color: var(--rowan); }   /* whatever is sounding wears the Rowan */
 .play--accent { width: 52px; height: 52px; background: var(--rust); border-color: var(--rust); color: var(--paper); }
 .play--accent:hover { background: var(--rust-deep); border-color: var(--rust-deep); color: var(--paper); }
 .play--pending { border-style: dashed; border-color: rgba(28, 26, 29, 0.32); cursor: default; }
 
 /* Listening room */
-.tracks { grid-column: 4 / span 9; display: flex; flex-direction: column; border-bottom: 1px solid var(--rule-subtle); }
+/* One grid for the whole list; each row borrows its columns (subgrid), so the number, the ring, the
+   text, the dossier and the measurement line up down the page whatever a single row contains. */
+.tracks {
+  grid-column: 4 / span 9; border-bottom: 1px solid var(--rule-subtle);
+  display: grid; grid-template-columns: 44px 44px minmax(0, 1.8fr) minmax(0, 1fr) auto; column-gap: 20px;
+}
 .track {
-  display: grid; grid-template-columns: 32px 44px 1.8fr 1.1fr 0.7fr; gap: 20px; align-items: start;
+  grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; row-gap: 20px; align-items: start;
   padding: 22px 0; border-top: 1px solid var(--rule-subtle);
   transition: background 0.25s ease;
 }
@@ -273,27 +290,32 @@ svg { display: block; }
   font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.01em; line-height: 1.3; color: var(--ink);
 }
 .track__tech summary::-webkit-details-marker { display: none; }
+/* The disclosure mark is a drawn chevron: down for "there is more below", turning up when open. The ring is a
+   border and the stroke a background image, so the two do not fight. */
 .track__tech summary::before {
-  content: '+'; flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink);
-  display: grid; place-items: center; font-family: var(--mono); font-size: 14px; line-height: 1; padding-bottom: 1px;
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  content: ''; flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.25px solid var(--ink-soft);
+  background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7.5 10l4.5 4.5 4.5-4.5' fill='none' stroke='%2356525a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center / 22px 22px;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 .track__tech summary span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(28, 26, 29, 0.3); transition: text-decoration-color 0.25s ease; }
 .track__tech summary:hover { color: var(--rowan-deep); }
-.track__tech summary:hover::before { background: var(--rowan); border-color: var(--rowan); color: var(--limewash); }
+.track__tech summary:hover::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7.5 10l4.5 4.5 4.5-4.5' fill='none' stroke='%23f8f8f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); }
+.track__tech summary:hover::before { background-color: var(--rowan); border-color: var(--rowan); }
 .track__tech summary:hover span { text-decoration-color: currentColor; }
 .track__tech[open] .when-closed, .track__tech:not([open]) .when-open { display: none; }
-.track__tech[open] summary::before { transform: rotate(45deg); background: var(--ink); color: var(--limewash); }
-.track__tech[open] summary:hover::before { background: var(--rowan); }
+.track__tech[open] summary::before { transform: rotate(180deg); border-color: var(--ink); background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7.5 10l4.5 4.5 4.5-4.5' fill='none' stroke='%231c1a1d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); }
+.track__tech[open] summary:hover::before { background-color: var(--rowan); border-color: var(--rowan); background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7.5 10l4.5 4.5 4.5-4.5' fill='none' stroke='%23f8f8f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); }
 .track__tech[open] > :not(summary) { animation: notes-in 0.3s ease both; }
 @keyframes notes-in { from { opacity: 0; transform: translateY(-4px); } }
 .track__tech p { margin-top: 10px; color: var(--warehouse); }
-.track__meta { font-family: var(--mono); font-size: var(--fs-mono); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; padding-top: 8px; white-space: nowrap; }
+/* The measurement always takes the last column, so a row without a dossier keeps its shape. */
+.track__meta { grid-column: -2; font-family: var(--mono); font-size: var(--fs-mono); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; padding-top: 8px; white-space: nowrap; }
 .track.is-playing .track__title { color: var(--rust); }
 
 /* Performance */
 .figure { grid-column: 1 / span 4; margin: 0; position: relative; }
-.figure img { display: block; width: 100%; height: auto; }
+/* Pictures sit on the paper: a hairline of ink instead of a cut edge. */
+.figure img { display: block; width: 100%; height: auto; outline: 1px solid var(--rule-subtle); outline-offset: -1px; }
 .figure figcaption { margin-top: 10px; color: var(--warehouse); }
 .list { display: flex; flex-direction: column; border-bottom: 1px solid var(--rule-subtle); }
 .list__row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 14px 0; border-top: 1px solid var(--rule-subtle); font-size: 20px; }
@@ -438,7 +460,6 @@ svg { display: block; }
   background: transparent; border: 0; color: inherit; cursor: pointer; font: inherit; padding: 0;
 }
 .player__toggle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; background: rgba(239, 233, 221, 0.1); }
-.player__toggle svg { fill: currentColor; }
 .player__toggle .icon-play { display: none; }
 .player.is-paused .player__toggle .icon-play { display: block; }
 .player.is-paused .player__toggle .icon-pause { display: none; }
@@ -470,11 +491,12 @@ svg { display: block; }
   .sec__title { font-size: 1.625rem; }
   .chamber__grid { display: flex; flex-direction: column; gap: 24px; }
   .chamber__aside, .chamber__lead { width: 100%; }
-  .track { grid-template-columns: 44px 44px 1fr; gap: 12px 14px; }
+  .tracks { grid-template-columns: 44px 44px minmax(0, 1fr); column-gap: 14px; }
+  .track { row-gap: 12px; }
   .track__desc { grid-column: 3; }
   .track__method, .track__tech { grid-column: 3; padding-top: 0; }
   .track__meta { grid-column: 3; text-align: left; padding-top: 0; white-space: normal; }
-  .figure img { max-height: 480px; object-fit: contain; object-position: left center; }
+  .figure img { width: auto; max-width: 100%; max-height: 480px; }
   .contact__content { width: 100%; min-width: 0; }
   .enquiries { display: flex; flex-direction: column; width: 100%; }
   .enq { font-size: 19px; width: 100%; }
@@ -515,6 +537,7 @@ svg { display: block; }
   .wudd__body, .wudd__note { color: var(--muted); }
   .label--wudd { color: var(--muted); }
   .enq > a::after { content: " (" attr(href) ")"; font-family: var(--sans); font-size: 12px; color: var(--muted); }
+  .tracks { display: block; }
   .track { grid-template-columns: 1.6fr 1.3fr 0.7fr; }
   .track .play { display: none; }
 }

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="css/site.css?v=9">
+  <link rel="stylesheet" href="css/site.css?v=12">
   <style>
     .page-work { min-height: 100vh; display: flex; flex-direction: column; }
     /* The header keeps its full-width rule; its contents align with the box below. */
@@ -45,16 +45,16 @@
       padding: 0 var(--gutter) clamp(64px, 8vw, 112px);
     }
 
-    /* Filters: the pressed one takes the Rowan rule, nothing fills. */
+    /* Filters: sentence case, medium weight; the pressed one takes a Rowan underline, not a tab. */
     .filters { display: flex; flex-wrap: wrap; gap: 8px 28px; padding: 18px 0; border-top: 1px solid var(--rule-subtle); }
     .filter {
-      background: transparent; border: 0; padding: 6px 0; cursor: pointer; color: var(--muted);
-      font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      border-bottom: 2px solid transparent; transition: color 0.25s ease;
+      background: transparent; border: 0; padding: 6px 0 8px; cursor: pointer; color: var(--muted);
+      font-family: var(--sans); font-size: 0.9375rem; font-weight: 500; letter-spacing: 0.01em;
+      border-bottom: 1.5px solid transparent; transition: color 0.25s ease;
     }
     .filter:hover { color: var(--ink); }
     .filter[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--rowan); }
-    .filter__n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-left: 6px; }
+    .filter__n { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.1em; color: var(--muted); margin-left: 6px; }
 
     .cat { margin-top: clamp(40px, 5vw, 64px); }
     .cat[hidden] { display: none; }
@@ -64,13 +64,13 @@
     .cat__note { font-family: var(--serif); font-style: italic; font-size: var(--fs-caption); font-variation-settings: 'opsz' 14; color: var(--ink-soft); }
 
     /* Catalogue rows: number, play, title and role, measurement. The rest waits inside the notes. */
-    .tracks--cat { grid-column: auto; }
-    .track--cat { grid-template-columns: 52px 44px minmax(0, 1fr) auto; scroll-margin-top: 24px; }
+    .tracks--cat { grid-column: auto; grid-template-columns: 52px 44px minmax(0, 1fr) auto; }
+    .track--cat { scroll-margin-top: 24px; }
     .track--cat:target { background: var(--panel); box-shadow: -12px 0 0 var(--panel), 12px 0 0 var(--panel); }
     .track__role { font-family: var(--serif); font-size: var(--fs-body-sm); line-height: 1.45; font-variation-settings: 'opsz' 16; color: var(--ink-soft); }
     .track__notes .track__desc { margin-top: 12px; }
     .track__notes .track__dossier { margin-top: 10px; max-width: var(--measure-sm); }
-    .track__film { display: block; width: 100%; max-width: 960px; height: auto; margin-top: 16px; background: var(--panel); }
+    .track__film { display: block; width: 100%; max-width: 960px; height: auto; margin-top: 16px; background: var(--panel); outline: 1px solid var(--rule-subtle); outline-offset: -1px; }
     /* An open film takes the columns its still has vacated, so the row does not sit lopsided. */
     .track--film:has(details[open]) .track__body { grid-column: 3 / -1; }
     .track--film:has(details[open]) .track__side { grid-column: 3 / -1; align-items: flex-start; }
@@ -79,11 +79,10 @@
        Pressing it opens the entry and starts the film; once open, the film itself replaces the still. */
     .track__side { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
     .track__thumb { display: block; width: clamp(200px, 19vw, 264px); padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; text-align: left; font: inherit; }
-    .track__thumb img { display: block; width: 100%; height: auto; background: var(--panel); transition: opacity 0.25s ease; }
+    .track__thumb img { display: block; width: 100%; height: auto; background: var(--panel); transition: opacity 0.25s ease; outline: 1px solid var(--rule-subtle); outline-offset: -1px; }
     .track__thumb:hover img { opacity: 0.86; }
     .track__thumb-cap { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.01em; }
-    .track__thumb-ring { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
-    .track__thumb-ring svg { fill: currentColor; margin-left: 1px; }
+    .track__thumb-ring { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.25px solid var(--ink-soft); color: var(--ink-soft); display: grid; place-items: center; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
     .track__thumb-label { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(28, 26, 29, 0.3); }
     .track__thumb-dur { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); }
     .track__thumb:hover { color: var(--rowan-deep); }
@@ -93,7 +92,7 @@
     .track__side .track__meta { padding-top: 0; }
 
     @media (max-width: 899px) {
-      .track--cat { grid-template-columns: 44px 44px minmax(0, 1fr); }
+      .tracks--cat { grid-template-columns: 44px 44px minmax(0, 1fr); }
       .track--cat .track__meta { grid-column: 3; }
       /* On a phone the film takes the full row, back across the number and play columns. */
       .track__film { width: calc(100% + 116px); max-width: none; margin-left: -116px; }
@@ -103,6 +102,7 @@
     }
     @media print {
       .filters, .track__film, .track__thumb { display: none; }
+      .tracks--cat { display: block; }
       .track--cat { grid-template-columns: 52px minmax(0, 1fr) auto; }
     }
   </style>
@@ -144,8 +144,8 @@
           <li class="track track--cat" id="ln-01" data-track="blackbirds" data-src="blackbirds-and-a-lavta.v1.m4a" data-title="Blackbirds and a lavta" data-details="#ln-01">
             <span class="track__idx">LN&middot;01</span>
             <button class="play" type="button" data-play="blackbirds" aria-label="Play Blackbirds and a lavta" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -164,8 +164,8 @@
           <li class="track track--cat" id="ln-02" data-track="oud" data-src="oud-texture-smyrna.v1.m4a" data-title="Oud texture (Smyrna)" data-details="#ln-02">
             <span class="track__idx">LN&middot;02</span>
             <button class="play" type="button" data-play="oud" aria-label="Play Oud texture (Smyrna)" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -184,8 +184,8 @@
           <li class="track track--cat" id="ln-03" data-track="ambiance" data-src="l-ambiance.v1.m4a" data-title="L’ambiance" data-details="#ln-03">
             <span class="track__idx">LN&middot;03</span>
             <button class="play" type="button" data-play="ambiance" aria-label="Play L’ambiance" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -204,8 +204,8 @@
           <li class="track track--cat" id="ln-04" data-track="candles" data-src="lean-candles.v1.m4a" data-title="Lean candles" data-details="#ln-04">
             <span class="track__idx">LN&middot;04</span>
             <button class="play" type="button" data-play="candles" aria-label="Play Lean candles" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -221,8 +221,28 @@
             </div>
             <p class="track__meta">Documentary score &middot; 2022 &middot; 3:05</p>
           </li>
-          <li class="track track--cat track--pending" id="ln-05">
+          <li class="track track--cat" id="ln-05" data-track="gothenburg" data-src="gothenburg-port-soundscape.v1.m4a" data-title="Gothenburg port soundscape" data-details="#ln-05">
             <span class="track__idx">LN&middot;05</span>
+            <button class="play" type="button" data-play="gothenburg" aria-label="Play Gothenburg port soundscape" aria-pressed="false">
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
+            </button>
+            <div class="track__body">
+              <h3 class="track__title">
+                <span>Gothenburg port soundscape</span>
+                <span class="track-wave" aria-hidden="true"><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span></span>
+              </h3>
+              <p class="track__role">Installation sound &middot; exhibition on the history of the port</p>
+              <details class="track__tech track__notes">
+                <summary><span class="when-closed">Notes and technical dossier</span><span class="when-open">Close the notes</span></summary>
+                <p class="track__desc">A soundscape from the sound installation I made for an exhibition in Gothenburg on the history of the city’s port. Two sections of the installation, played here one after the other.</p>
+                <p class="track__dossier">stereo and binaural field recording &middot; stereo microphone pair → Zoom F3 &middot; recorded in the city, the port, on the ferry and at the seaside</p>
+              </details>
+            </div>
+            <p class="track__meta">Gothenburg &middot; 2024 &middot; 9:12</p>
+          </li>
+          <li class="track track--cat track--pending" id="ln-06">
+            <span class="track__idx">LN&middot;06</span>
             <span class="play play--pending" aria-hidden="true"></span>
             <div class="track__body">
               <h3 class="track__title">The shearwaters <span class="wt">(in development)</span></h3>
@@ -234,25 +254,6 @@
               </details>
             </div>
             <p class="track__meta">Rùm &middot; Crete &middot; 2026</p>
-          </li>
-          <li class="track track--cat" id="ln-06" data-track="gothenburg" data-src="gothenburg-port-soundscape.v1.m4a" data-title="Gothenburg port soundscape" data-details="#ln-06">
-            <span class="track__idx">LN&middot;06</span>
-            <button class="play" type="button" data-play="gothenburg" aria-label="Play Gothenburg port soundscape" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
-            </button>
-            <div class="track__body">
-              <h3 class="track__title">
-                <span>Gothenburg port soundscape</span>
-                <span class="track-wave" aria-hidden="true"><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span></span>
-              </h3>
-              <p class="track__role">Installation sound &middot; exhibition on the history of the port</p>
-              <details class="track__tech track__notes">
-                <summary><span class="when-closed">Read the notes</span><span class="when-open">Close the notes</span></summary>
-                <p class="track__desc">A soundscape from the sound installation I made for an exhibition in Gothenburg on the history of the city’s port. Two sections of the installation, played here one after the other.</p>
-              </details>
-            </div>
-            <p class="track__meta">Gothenburg &middot; 2024 &middot; 9:12</p>
           </li>
         </ol>
       </section>
@@ -267,8 +268,8 @@
           <li class="track track--cat track--film" id="sc-01" data-track="white-rose" data-src="white-rose.v1.m4a" data-title="White Rose" data-details="#sc-01">
             <span class="track__idx">SC&middot;01</span>
             <button class="play" type="button" data-play="white-rose" aria-label="Play White Rose" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -287,35 +288,16 @@
             <div class="track__side">
               <button class="track__thumb" type="button" data-film aria-label="Watch the film: White Rose">
                 <img src="video/white-rose.v1.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async">
-                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">3:33</span></span>
+                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M9.5 7.5v9l7.4-4.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">3:33</span></span>
               </button>
               <p class="track__meta">Guildhall &middot; 2024</p>
             </div>
           </li>
-          <li class="track track--cat" id="sc-02" data-track="reel" data-src="screen-reel.v1.m4a" data-title="Two cues for short film: Japan and Java" data-details="#sc-02">
+          <li class="track track--cat track--film" id="sc-02" data-track="boxer" data-src="the-boxer.v1.m4a" data-title="The Boxer" data-details="#sc-02">
             <span class="track__idx">SC&middot;02</span>
-            <button class="play" type="button" data-play="reel" aria-label="Play Two cues for short film: Japan and Java" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
-            </button>
-            <div class="track__body">
-              <h3 class="track__title">
-                <span>Two cues for short film: Japan and Java</span>
-                <span class="track-wave" aria-hidden="true"><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span></span>
-              </h3>
-              <p class="track__role">Screen reel &middot; Japanese instrumentation, Javanese gamelan</p>
-              <details class="track__tech track__notes">
-                <summary><span class="when-closed">Read the notes</span><span class="when-open">Close the notes</span></summary>
-                <p class="track__desc">Two cues from my screen reel, each written for a short film. The first follows a lighthouse keeper’s daughter on the Sea of Japan coast, recording the foghorn in the week before it is switched off. The second is a night ferry crossing out of Java: a boy is carrying his grandfather’s gong to be retuned, and the cue is built on gamelan.</p>
-              </details>
-            </div>
-            <p class="track__meta">Reel &middot; 2024 &middot; 2:08</p>
-          </li>
-          <li class="track track--cat track--film" id="sc-03" data-track="boxer" data-src="the-boxer.v1.m4a" data-title="The Boxer" data-details="#sc-03">
-            <span class="track__idx">SC&middot;03</span>
             <button class="play" type="button" data-play="boxer" aria-label="Play The Boxer" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -334,16 +316,16 @@
             <div class="track__side">
               <button class="track__thumb" type="button" data-film aria-label="Watch the film: The Boxer">
                 <img src="video/the-boxer.v1.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async">
-                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">0:35</span></span>
+                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M9.5 7.5v9l7.4-4.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">0:35</span></span>
               </button>
               <p class="track__meta">Guildhall &middot; 2024</p>
             </div>
           </li>
-          <li class="track track--cat track--film" id="sc-04" data-track="waves" data-src="waves.v1.m4a" data-title="Waves" data-details="#sc-04">
-            <span class="track__idx">SC&middot;04</span>
+          <li class="track track--cat track--film" id="sc-03" data-track="waves" data-src="waves.v1.m4a" data-title="Waves" data-details="#sc-03">
+            <span class="track__idx">SC&middot;03</span>
             <button class="play" type="button" data-play="waves" aria-label="Play Waves" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -362,10 +344,29 @@
             <div class="track__side">
               <button class="track__thumb" type="button" data-film aria-label="Watch the film: Waves">
                 <img src="video/waves.v1.jpg" width="1280" height="532" alt="" loading="lazy" decoding="async">
-                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">0:45</span></span>
+                <span class="track__thumb-cap"><span class="track__thumb-ring" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M9.5 7.5v9l7.4-4.5z"/></svg></span><span class="track__thumb-label">Watch the film</span><span class="track__thumb-dur">0:45</span></span>
               </button>
               <p class="track__meta">Guildhall &middot; 2024</p>
             </div>
+          </li>
+          <li class="track track--cat" id="sc-04" data-track="reel" data-src="screen-reel.v1.m4a" data-title="Two cues for short film: Japan and Java" data-details="#sc-04">
+            <span class="track__idx">SC&middot;04</span>
+            <button class="play" type="button" data-play="reel" aria-label="Play Two cues for short film: Japan and Java" aria-pressed="false">
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
+            </button>
+            <div class="track__body">
+              <h3 class="track__title">
+                <span>Two cues for short film: Japan and Java</span>
+                <span class="track-wave" aria-hidden="true"><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span></span>
+              </h3>
+              <p class="track__role">Screen reel &middot; Japanese instrumentation, Javanese gamelan</p>
+              <details class="track__tech track__notes">
+                <summary><span class="when-closed">Read the notes</span><span class="when-open">Close the notes</span></summary>
+                <p class="track__desc">Two cues from my screen reel, each written for a short film. The first follows a lighthouse keeper’s daughter on the Sea of Japan coast, recording the foghorn in the week before it is switched off. The second is a night ferry crossing out of Java: a boy is carrying his grandfather’s gong to be retuned, and the cue is built on gamelan.</p>
+              </details>
+            </div>
+            <p class="track__meta">Reel &middot; 2024 &middot; 2:08</p>
           </li>
         </ol>
       </section>
@@ -380,8 +381,8 @@
           <li class="track track--cat" id="ex-01" data-track="seven-eighths" data-src="seven-eighths.v1.m4a" data-title="Limestone aksak" data-details="#ex-01">
             <span class="track__idx">EX&middot;01</span>
             <button class="play" type="button" data-play="seven-eighths" aria-label="Play Limestone aksak" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -399,8 +400,8 @@
           <li class="track track--cat" id="ex-02" data-track="sample-that" data-src="sample-that.v1.m4a" data-title="The piano turns" data-details="#ex-02">
             <span class="track__idx">EX&middot;02</span>
             <button class="play" type="button" data-play="sample-that" aria-label="Play The piano turns" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -418,8 +419,8 @@
           <li class="track track--cat" id="ex-03" data-track="granular-trip-hop" data-src="granular-trip-hop.v1.m4a" data-title="Voice in grains" data-details="#ex-03">
             <span class="track__idx">EX&middot;03</span>
             <button class="play" type="button" data-play="granular-trip-hop" aria-label="Play Voice in grains" aria-pressed="false">
-              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
             </button>
             <div class="track__body">
               <h3 class="track__title">
@@ -428,8 +429,9 @@
               </h3>
               <p class="track__role">Granular &middot; a rhythm cut from a chopped vocal</p>
               <details class="track__tech track__notes">
-                <summary><span class="when-closed">Read the notes</span><span class="when-open">Close the notes</span></summary>
+                <summary><span class="when-closed">Notes and technical dossier</span><span class="when-open">Close the notes</span></summary>
                 <p class="track__desc">The rhythm here comes from one place only: a vocal performance, sampled and chopped until the cuts themselves became the beat. It sits on a distorted bass, while granular processing pulls the voice apart into grains and lets it gather again.</p>
+                <p class="track__dossier">vocal performance → sampled and chopped into the rhythm &middot; distorted bass &middot; granular processing</p>
               </details>
             </div>
             <p class="track__meta">2024 &middot; 0:41</p>
@@ -446,8 +448,8 @@
 
   <div class="player" id="player" role="region" aria-label="Now playing" hidden>
     <button class="player__toggle" type="button" id="player-toggle" aria-label="Pause">
-      <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
-      <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+      <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 7.5v9l7.4-4.5z"/></svg>
+      <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10" stroke-width="3.4"/></svg>
     </button>
     <p class="player__title" id="player-title" aria-live="polite"></p>
     <p class="player__time" id="player-time">0:00</p>

@@ -15,11 +15,13 @@ Rules adopted from the September 2026 design review:
 - The hand rule (`.hand-rule`) appears in exactly three places on the homepage: under "Listen first", above the pull-quote, above the footer. Do not add a fourth.
 - One shared container: `--page` for padded boxes, `--max-width` for inner content. Homepage, catalogue and writing page must sit in the same box.
 - The ground carries a baked grain tile on `body`; panels stay flat.
+- Every mark is one set with round caps and joins on a 24-unit grid: a pebble-round play triangle and two-bar pause in a 1.25px ring, a drawn chevron (down, turning up when open) for disclosures, 1.5px arrows. Only the play ring is pure ink. Pictures and films take a 1px `--rule-subtle` hairline, never rounded corners.
+- Eyebrow labels (`.label`) are weight 500. This deviates from the Teine brand page's 700, on the reviewer's advice; see the to-do list.
 
 ## Copy voice
 
 - **Never use em dashes.** See the workspace CLAUDE.md. Use commas, colons, semicolons, parentheses, or separate sentences.
-- Do not lead with a single instrument. He is a composer and multi-instrumentalist; mandolin is the current focus (with modular), lavta is also played. Keep existing song titles and their instruments as they are (e.g. "Blackbirds and a lavta" stays lavta).
+- Do not lead with a single instrument. He is a composer and multi-instrumentalist; mandolin is the current focus (with modular), lavta is also played. Keep existing song titles and their instruments as they are (e.g. "Blackbirds and a lavta" stays lavta). He also plays the Cretan boulgari, baritone guitar and bodhrán; spell it "boulgari" (never "bulgari", which reads as the jeweller) and "bodhrán" with the accent. His makam and dastgah study was at Ross Daly's Labyrinth Musical Workshop in Crete: say "studied ... at", not "trained by Ross Daly".
 - No GPS or coordinate residence pinning. He passes through Cromarty and Crete, does not live there. Place names are fine as photo credit, fieldwork, or project context, not as a "where I am" device.
 - Listening-room track descriptions: humble and plain, first-person where it is genuinely personal, keeping a little of the research/method register (granular processing, band-pass sweeps, voltage drift) where it earns its place. Say what the piece is, name the place and instruments, stop. Avoid "interrogates / examines / charts the dialogue" and claims about what the listener will feel.
 
@@ -36,21 +38,29 @@ Bump the `?v=N` on the `css/site.css` link when changing CSS so reloads are not 
 
 Seeking in the player needs HTTP Range support, which `http.server` lacks. When testing playback use `npx http-server -p 8137 -c-1 .` instead.
 
+## Homepage selection
+
+The homepage listening room is a selection of four, each with a one or two line description (the full text lives in the catalogue), in this order: LN·01 Blackbirds and a lavta, LN·02 Oud texture (Smyrna), LN·05 Gothenburg port soundscape, EX·03 Voice in grains. Everything else (L’ambiance, Lean candles, The shearwaters, all screen work, the other studies) lives only in `work.html`. Rows keep their catalogue numbers, so gaps on the homepage are expected.
+
 ## Media
 
 Masters live in `masters/` (git-ignored). Delivery files are made with `tools/encode-audio.sh <master> <slug>` (AAC 160k, one linear gain toward -14 LUFS, -1 dBTP ceiling, never compression) and `tools/encode-video.sh`. File names are versioned (`slug.v1.m4a`) because `vercel.json` caches media as immutable: re-encode under a new version, never the same name. Catalogue numbers: `LN` composition and installation, `SC` screen, `EX` experiments.
 
 ## What is left to do
 
-Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026.
+Keep this list current: whenever work finishes or new work is agreed, update it in the same change. Last updated 20 September 2026 (after the softened marks, the homepage selection of four and the rewritten bio).
 
 Waiting on Ioannis:
 - Master for "Blackbirds and a lavta" (LN·01, also "Listen first"). Until `audio/blackbirds-and-a-lavta.v1.m4a` exists its play button reports that the recording could not load. Encode with `tools/encode-audio.sh`. Last resort is the lossy SoundCloud stream.
 - His own brush stroke, inked and scanned, to trace into `.hand-rule` in `css/site.css` (the current path is the reviewer's placeholder).
-- Real synopses for the two reel cues (SC·02); the current stories are invented placeholders. Confirm the "distorted bass" in EX·03 and the three EX titles (Limestone aksak, The piano turns, Voice in grains).
+- Real synopses for the two reel cues (SC·04); the current stories are invented placeholders. Confirm the "distorted bass" in EX·03 and the three EX titles (Limestone aksak, The piano turns, Voice in grains).
 - Confirmation that the three Guildhall films may be published; if not, remove the `<video>` blocks and stills in `work.html` (rows still work as audio).
 - One photograph of the instrument or the person for About (review #26).
+- The brand of the Czech stereo microphone used on Gothenburg port soundscape (LN·05); the dossier currently says "stereo microphone pair". Add the name when he remembers it.
+- Bio checks: optionally the names of his makam and dastgah teachers at Labyrinth (the convention among Labyrinth musicians is "studied X with [name]"); whether his PhD concerned memory, which would let the bio link the science to the archive work directly.
 - Decision on the printed condensed wordmark versus the web Newsreader wordmark (review #29).
+- Decision on eyebrow labels at weight 500 (review S4): keep, or return to the brand page's 700.
+- Once the hand rule is his own stroke: optionally draw the six marks (play, pause, plus, cross, two arrows) with the same pen and use them as masks, replacing the one-stroke SVG set.
 
 Waiting on Teine Studio:
 - Whether lichen `#5c6b4f` may join the Found Palette with a provenance line (review #15, #30). Until then the pending-track circle uses a 32% ink hairline; if approved, add `--lichen` and use it for `.play--pending` only.
@@ -58,7 +68,7 @@ Waiting on Teine Studio:
 To build later (placeholders in place):
 - Bookers' one-page PDF for Between Two Shores (description, two durations, ensemble options, rider table, stage plan) at `press/between-two-shores.pdf`, and a press kit (60-word and 200-word third-person bios, two photographs, logotype) at `press/levant-noir-press-kit.zip` (review #25, #27). The Live section currently says both are available on request; replace that sentence with links, and add a "For bookers" row to Enquiries. Needs the set's duration and technical requirements from Ioannis.
 - Podcast and radio category in the catalogue, once he supplies the work (excerpts cleared with clients).
-- Meta line of Lean candles still reads "Documentary score · 2022"; the review wants a place there, city unknown.
+- In `work.html`, the meta line of Lean candles still reads "Documentary score · 2022"; the review wants a place there, city unknown.
 - Move `audio/` and `video/` to a bucket (Cloudflare R2) when the archive outgrows the repo; only `AUDIO_BASE` in `js/player.js` and the video paths change.
 - Recreate the `git pushw` alias on this machine (see below); pushes currently use the equivalent one-off HTTPS command.
 
